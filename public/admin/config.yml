@@ -1,0 +1,68 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "films"
+    label: "Films"
+    folder: "content/films"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Subtitle", name: "subtitle", widget: "string", required: false }
+      - { label: "Director", name: "director", widget: "string" }
+      - { label: "Release Date", name: "release_date", widget: "string" }
+      - { label: "Runtime", name: "runtime", widget: "string" }
+      - { label: "Genre", name: "genre", widget: "string" }
+      - { label: "Rating", name: "rating", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
+      - { label: "Review Date", name: "date", widget: "date" }
+      - { label: "Cover Image", name: "image", widget: "image", required: false }
+      - { label: "Summary", name: "summary", widget: "text", required: false }
+      - { label: "Content", name: "content", widget: "markdown" }
+      - { label: "Pros", name: "pros", widget: "list", required: false }
+      - { label: "Cons", name: "cons", widget: "list", required: false }
+      - { label: "Verdict", name: "verdict", widget: "text", required: false }
+
+  - name: "music"
+    label: "Music"
+    folder: "content/music"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Artist", name: "artist", widget: "string" }
+      - { label: "Release Date", name: "release_date", widget: "string" }
+      - { label: "Genre", name: "genre", widget: "string" }
+      - { label: "Favorite Track", name: "favorite_track", widget: "string", required: false }
+      - { label: "Least Favorite Track", name: "least_favorite_track", widget: "string", required: false }
+      - { label: "Rating", name: "rating", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
+      - { label: "Review Date", name: "date", widget: "date" }
+      - { label: "Cover Image", name: "image", widget: "image", required: false }
+      - { label: "Summary", name: "summary", widget: "text", required: false }
+      - { label: "Content", name: "content", widget: "markdown" }
+      - { label: "Verdict", name: "verdict", widget: "text", required: false }
+
+  - name: "games"
+    label: "Games"
+    folder: "content/games"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Developer", name: "developer", widget: "string" }
+      - { label: "Platform", name: "platform", widget: "string" }
+      - { label: "Release Date", name: "release_date", widget: "string" }
+      - { label: "Genre", name: "genre", widget: "string" }
+      - { label: "Playtime", name: "playtime", widget: "string", required: false }
+      - { label: "Rating", name: "rating", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
+      - { label: "Review Date", name: "date", widget: "date" }
+      - { label: "Cover Image", name: "image", widget: "image", required: false }
+      - { label: "Summary", name: "summary", widget: "text", required: false }
+      - { label: "Content", name: "content", widget: "markdown" }
+      - { label: "Pros", name: "pros", widget: "list", required: false }
+      - { label: "Cons", name: "cons", widget: "list", required: false }
+      - { label: "Verdict", name: "verdict", widget: "text", required: false }
