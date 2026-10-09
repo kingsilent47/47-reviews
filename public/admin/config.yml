@@ -11,6 +11,8 @@ collections:
     folder: "content/films"
     create: true
     slug: "{{slug}}"
+    format: json
+    extension: json
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Subtitle", name: "subtitle", widget: "string", required: false }
@@ -32,6 +34,8 @@ collections:
     folder: "content/music"
     create: true
     slug: "{{slug}}"
+    format: json
+    extension: json
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Artist", name: "artist", widget: "string" }
@@ -51,6 +55,8 @@ collections:
     folder: "content/games"
     create: true
     slug: "{{slug}}"
+    format: json
+    extension: json
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Developer", name: "developer", widget: "string" }
