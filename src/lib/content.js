@@ -1,13 +1,14 @@
 // Read all JSON files in the content folder at build time
-const modules = import.meta.glob('../content/**/*.json', { eager: true });
+// Note: ../../ goes up from src/lib/ to the root folder
+const modules = import.meta.glob('../../content/**/*.json', { eager: true });
 
 function parseReview(path, module) {
   const data = module.default || module;
   
-  // Extract category from path: ../content/films/slug.json becomes 'films'
-  const category = path.split('/')[2];
+  // Extract category from path: ../../content/films/slug.json becomes 'films'
+  const category = path.split('/')[3];
   
-  // Extract slug from path: ../content/films/slug.json becomes 'slug'
+  // Extract slug from path: ../../content/films/slug.json becomes 'slug'
   const slug = path.split('/').pop().replace('.json', '');
 
   return {
