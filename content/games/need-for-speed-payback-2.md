@@ -1,0 +1,31 @@
+---
+title: "Need For Speed: Payback"
+developer: Electronic Arts (EA)
+platform: PS4, Xbox One, PC
+release_date: 10 November 2017
+genre: Racing, Open World
+rating: 4
+image: https://image.api.playstation.com/vulcan/ap/rnd/202211/2510/oAWEVsqIwM2Db534bhSLT6lp.png
+content: >-
+  If you're looking for a fun need for speed game to play, this is the one. This
+  has to be hands-down one of the top 3 best Need for Speed games I have ever
+  played in my life. The story is set out in the fictional place called fortune
+  valley, where you utilize three characters in a crew.
+
+
+  Tyler Morgan, the knuckle head who happens to be an aspiring street racer and drag racer. Sean McAlister, a British man who is an offroad and drift connoisseur. Jessica Miller, a wheelwoman for hire and very professional driver compared to the two racers.
+
+
+  The story follows Tyler and his crew who are betrayed by a woman named Lina Navarro at the start of the game. After the events of the betrayal, Lina starts working with the city's cartel called The house and they start taking control of city including rigging races, having control of the police force and just simply taking everything that they can take in Fortune Valley. Tyler and his crew have work towards winning the biggest race in the game called The Outlaw's Rush in order to take down Lina and The House. Each crew has their own set of tasks they have to complete in order to take down The House.
+
+
+  The crew has to take the different Street leagues across Fortune Valley. Street Leagues are the street racing crews that can be found across Fortune Valley. Each has their own skill level, racing discipline, style, and crew boss. Defeating them is important in making it to the Outlaw's Rush.
+
+
+  EA really took their time with the gameplay of this game; the visual customization of this game is incredible. I've spent a lot of time customizing my cars to make sure they 47-esque if you get what I mean. The handling in this game is incredibly good, but it does not really stand out as amazing as it kind of feels like you're playing arcade style if you catch my drift. The sense of speed is good as well, not the best but still enough to make the game incredible when you look at it.
+
+
+  The only downfall of this game is the mediocre storyline that takes place, the boring soundtrack EA used for this game, the think you have to use speedcards in order to upgrade your vehicle (not really a problem once you get used to it) and the lack of police activity in Freeroam. Overall, this is a great racing game to play if you're into racing games and I would highly recommend it to anyone who wants to play a racing game.
+pros: []
+cons: []
+---
