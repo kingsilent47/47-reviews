@@ -42,6 +42,11 @@ function ReviewDetail() {
     return stars.join('');
   };
 
+  const capitalize = (str) => {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   return (
     <div className="py-16">
       <div className="container-editorial max-w-3xl">
@@ -49,25 +54,25 @@ function ReviewDetail() {
           to={`/${category}`}
           className="inline-block text-sm text-muted hover:text-ink mb-8 transition-colors"
         >
-          Back to {category}
+          Back to {capitalize(category)}
         </Link>
 
         <article>
           <header className="mb-12">
-            <p className="text-sm text-muted uppercase tracking-wide mb-4">
-              {review.category}
+            <p className="text-xs text-muted uppercase tracking-widest mb-4">
+              {capitalize(category)}
             </p>
             
-            <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4 leading-tight">
+            <h1 className="font-serif text-5xl md:text-6xl font-bold mb-6 leading-tight">
               {review.title}
             </h1>
 
             {review.subtitle && (
-              <p className="text-2xl text-muted mb-6">{review.subtitle}</p>
+              <p className="text-2xl text-muted mb-6 font-serif italic">{review.subtitle}</p>
             )}
 
-            <div className="flex items-center gap-6 text-sm text-muted mb-6">
-              <span className="text-2xl font-medium tracking-wide">
+            <div className="flex items-center gap-6 text-sm text-muted mb-8 pb-8 border-b border-gray-200">
+              <span className="text-2xl font-medium tracking-wide text-ink">
                 {renderStars(review.rating)}
               </span>
               <span>{review.date}</span>
@@ -82,18 +87,83 @@ function ReviewDetail() {
                 />
               </div>
             )}
+
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 py-8 border-t border-b border-gray-200 text-sm">
+              {review.developer && (
+                <div>
+                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Developer</p>
+                  <p className="font-medium text-ink">{review.developer}</p>
+                </div>
+              )}
+              {review.director && (
+                <div>
+                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Director</p>
+                  <p className="font-medium text-ink">{review.director}</p>
+                </div>
+              )}
+              {review.artist && (
+                <div>
+                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Artist</p>
+                  <p className="font-medium text-ink">{review.artist}</p>
+                </div>
+              )}
+              {review.platform && (
+                <div>
+                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Platform</p>
+                  <p className="font-medium text-ink">{review.platform}</p>
+                </div>
+              )}
+              {review.release_date && (
+                <div>
+                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Release Date</p>
+                  <p className="font-medium text-ink">{review.release_date}</p>
+                </div>
+              )}
+              {review.genre && (
+                <div>
+                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Genre</p>
+                  <p className="font-medium text-ink">{review.genre}</p>
+                </div>
+              )}
+              {review.runtime && (
+                <div>
+                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Runtime</p>
+                  <p className="font-medium text-ink">{review.runtime}</p>
+                </div>
+              )}
+              {review.playtime && (
+                <div>
+                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Playtime</p>
+                  <p className="font-medium text-ink">{review.playtime}</p>
+                </div>
+              )}
+              {review.favorite_track && (
+                <div>
+                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Favorite Track</p>
+                  <p className="font-medium text-ink">{review.favorite_track}</p>
+                </div>
+              )}
+              {review.least_favorite_track && (
+                <div>
+                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Least Favorite Track</p>
+                  <p className="font-medium text-ink">{review.least_favorite_track}</p>
+                </div>
+              )}
+            </div>
           </header>
 
           <div className="space-y-6 text-lg leading-relaxed">
             {review.summary && (
-              <p className="text-xl text-muted leading-relaxed mb-8 font-serif italic">
+              <p className="text-xl text-muted leading-relaxed mb-8 font-serif italic border-l-4 border-ink pl-6">
                 {review.summary}
               </p>
             )}
 
-            {review.content.split('\n\n').map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
+            <div className="space-y-6">
+              {review.content.split('\n\n').map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </div>
 
             {review.pros && review.pros.length > 0 && (
               <div className="mt-12 pt-8 border-t border-gray-200">
