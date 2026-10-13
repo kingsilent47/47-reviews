@@ -79,14 +79,14 @@ function ReviewDetail() {
             </div>
 
             {review.image && (
-              <div className="aspect-[16/9] bg-gray-100 mb-8 overflow-hidden">
-                <img 
-                  src={review.image} 
-                  alt={review.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            )}
+  <div className="bg-gray-100 mb-8 overflow-hidden flex justify-center">
+    <img 
+      src={review.image} 
+      alt={review.title}
+      className="w-full h-auto max-h-[600px] object-contain"
+    />
+  </div>
+)}
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 py-8 border-t border-b border-gray-200 text-sm">
               {review.developer && (
