@@ -23,7 +23,7 @@ function ReviewCard({ review }) {
       to={`/${review.category}/${review.slug}`}
       className="group block"
     >
-      <div className="aspect-[2/3] bg-gray-100 mb-4 overflow-hidden">
+      <div className="aspect-[16/9] bg-gray-100 mb-4 overflow-hidden">
         {review.image ? (
           <img
             src={review.image}
