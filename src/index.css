@@ -17,3 +17,20 @@
     @apply max-w-5xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 }
+
+/* Dark Mode Overrides */
+.dark {
+  --color-ink: #e5e5e5;
+  --color-paper: #171717;
+  --color-muted: #a3a3a3;
+}
+
+.dark .bg-paper { background-color: var(--color-paper); }
+.dark .text-ink { color: var(--color-ink); }
+.dark .text-muted { color: var(--color-muted); }
+.dark .bg-gray-100 { background-color: #262626; }
+.dark .bg-gray-50 { background-color: #1f1f1f; }
+.dark .border-gray-200 { border-color: #333333; }
+.dark .border-gray-300 { border-color: #404040; }
+.dark .hover\:bg-gray-800:hover { background-color: #333333; }
+.dark .focus\:border-ink:focus { border-color: var(--color-ink); }
