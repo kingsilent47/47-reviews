@@ -28,6 +28,7 @@ collections:
       - { label: "Pros", name: "pros", widget: "list", required: false }
       - { label: "Cons", name: "cons", widget: "list", required: false }
       - { label: "Verdict", name: "verdict", widget: "text", required: false }
+      - { label: "Pull Quote", name: "pull_quote", widget: "text", required: false }
 
   - name: "music"
     label: "Music"
@@ -49,6 +50,7 @@ collections:
       - { label: "Summary", name: "summary", widget: "text", required: false }
       - { label: "Content", name: "content", widget: "markdown" }
       - { label: "Verdict", name: "verdict", widget: "text", required: false }
+      - { label: "Pull Quote", name: "pull_quote", widget: "text", required: false }
 
   - name: "games"
     label: "Games"
@@ -70,5 +72,6 @@ collections:
       - { label: "Summary", name: "summary", widget: "text", required: false }
       - { label: "Content", name: "content", widget: "markdown" }
       - { label: "Pros", name: "pros", widget: "list", required: false }
+      - { label: "Pull Quote", name: "pull_quote", widget: "text", required: false }
       - { label: "Cons", name: "cons", widget: "list", required: false }
       - { label: "Verdict", name: "verdict", widget: "text", required: false }
