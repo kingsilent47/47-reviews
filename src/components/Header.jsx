@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
+import ThemeToggle from './ThemeToggle';
 
 function Header() {
   const location = useLocation();
@@ -22,21 +23,25 @@ function Header() {
             47 Reviews
           </Link>
 
-          <nav className="hidden md:flex space-x-8">
-            {navItems.map(item => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`text-sm font-medium transition-colors ${
-                  location.pathname === item.path
-                    ? 'text-ink'
-                    : 'text-muted hover:text-ink'
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+          {/* Desktop Navigation and Toggle */}
+          <div className="hidden md:flex items-center gap-8">
+            <nav className="flex space-x-8">
+              {navItems.map(item => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`text-sm font-medium transition-colors ${
+                    location.pathname === item.path
+                      ? 'text-ink'
+                      : 'text-muted hover:text-ink'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+            <ThemeToggle />
+          </div>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -53,6 +58,7 @@ function Header() {
           </button>
         </div>
 
+        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <nav className="md:hidden py-4 border-t border-gray-200">
             {navItems.map(item => (
@@ -69,6 +75,9 @@ function Header() {
                 {item.label}
               </Link>
             ))}
+            <div className="pt-4 mt-2 border-t border-gray-200">
+              <ThemeToggle />
+            </div>
           </nav>
         )}
       </div>
