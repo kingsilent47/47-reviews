@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { loadReviewBySlug } from '../lib/content';
+import { loadReviewBySlug, loadReviews } from '../lib/content';
+import ReviewCard from '../components/ReviewCard';
 
 function ReviewDetail() {
   const { category, id } = useParams();
@@ -39,7 +40,15 @@ function ReviewDetail() {
         stars.push('☆');
       }
     }
-    const calculateReadingTime = (text) => {
+    return stars.join('');
+  };
+
+  const capitalize = (str) => {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  const calculateReadingTime = (text) => {
       if (!text) return 1;
       const wordsPerMinute = 200;
       const wordCount = text.trim().split(/\s+/).length;
@@ -47,13 +56,32 @@ function ReviewDetail() {
       return Math.max(1, minutes); // Minimum 1 minute
     };
 
-    const readingTime = calculateReadingTime(review.content);
-    return stars.join('');
-  };
+  const readingTime = calculateReadingTime(review.content);
 
-  const capitalize = (str) => {
-    if (!str) return '';
-    return str.charAt(0).toUpperCase() + str.slice(1);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollTop;
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scroll = totalScroll / windowHeight;
+      setScrollProgress(scroll * 100);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const [relatedReviews, setRelatedReviews] = useState([]);
+
+  useEffect(() => {
+    loadRelated();
+  }, [category]);
+
+  const loadRelated = async () => {
+    const allInCategory = await loadReviews(category);
+    const filtered = allInCategory.filter(r => r.slug !== id).slice(0, 3);
+    setRelatedReviews(filtered);
   };
 
   return (
@@ -80,22 +108,24 @@ function ReviewDetail() {
               <p className="text-2xl text-muted mb-6 font-serif italic">{review.subtitle}</p>
             )}
 
-            <div className="flex items-center gap-6 text-sm text-muted mb-8 pb-8 border-b border-gray-200">
+            <div className="flex items-center gap-4 text-sm text-muted mb-8 pb-8 border-b border-gray-200">
               <span className="text-2xl font-medium tracking-wide text-ink">
                 {renderStars(review.rating)}
               </span>
               <span>{review.date}</span>
+              <span>•</span>
+              <span>{readingTime} min read</span>
             </div>
 
             {review.image && (
-  <div className="bg-gray-100 mb-8 overflow-hidden flex justify-center">
-    <img 
-      src={review.image} 
-      alt={review.title}
-      className="w-full h-auto max-h-[600px] object-contain"
-    />
-  </div>
-)}
+              <div className="bg-gray-100 mb-8 overflow-hidden flex justify-center">
+                <img 
+                  src={review.image} 
+                  alt={review.title}
+                  className="w-full h-auto max-h-[600px] object-contain"
+                />
+              </div>
+            )}
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 py-8 border-t border-b border-gray-200 text-sm">
               {review.developer && (
@@ -240,6 +270,18 @@ function ReviewDetail() {
             )}
           </div>
         </article>
+        {relatedReviews.length > 0 && (
+          <section className="mt-24 pt-12 border-t border-gray-200">
+            <h2 className="font-serif text-3xl font-bold mb-8">
+              More in {capitalize(category)}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {relatedReviews.map(review => (
+                <ReviewCard key={review.slug} review={review} />
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );
