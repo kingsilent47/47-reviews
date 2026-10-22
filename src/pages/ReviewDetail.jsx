@@ -158,6 +158,13 @@ function ReviewDetail() {
                 {review.summary}
               </p>
             )}
+            {review.pull_quote && (
+              <blockquote className="my-12 py-8 border-t border-b border-gray-200 text-center">
+                <p className="font-serif text-2xl md:text-3xl italic text-ink leading-relaxed">
+                    "{review.pull_quote}"
+                </p>
+              </blockquote>
+            )}
 
             <div className="space-y-6">
   {review.content.split('\n\n').map((paragraph, index) => (
