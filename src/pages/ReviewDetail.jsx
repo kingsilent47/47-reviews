@@ -5,16 +5,38 @@ import ReviewCard from '../components/ReviewCard';
 
 function ReviewDetail() {
   const { category, id } = useParams();
+  
   const [review, setReview] = useState(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [relatedReviews, setRelatedReviews] = useState([]);
 
   useEffect(() => {
+    const loadReview = async () => {
+      const data = await loadReviewBySlug(category, id);
+      setReview(data);
+    };
     loadReview();
   }, [category, id]);
 
-  const loadReview = async () => {
-    const data = await loadReviewBySlug(category, id);
-    setReview(data);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollTop;
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scroll = totalScroll / windowHeight;
+      setScrollProgress(scroll * 100);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const loadRelated = async () => {
+      const allInCategory = await loadReviews(category);
+      const filtered = allInCategory.filter(r => r.slug !== id).slice(0, 3);
+      setRelatedReviews(filtered);
+    };
+    loadRelated();
+  }, [category]);
 
   if (!review) {
     return (
@@ -30,15 +52,10 @@ function ReviewDetail() {
     const stars = [];
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
-    
     for (let i = 0; i < 5; i++) {
-      if (i < fullStars) {
-        stars.push('★');
-      } else if (i === fullStars && hasHalfStar) {
-        stars.push('½');
-      } else {
-        stars.push('☆');
-      }
+      if (i < fullStars) stars.push('★');
+      else if (i === fullStars && hasHalfStar) stars.push('½');
+      else stars.push('☆');
     }
     return stars.join('');
   };
@@ -49,97 +66,45 @@ function ReviewDetail() {
   };
 
   const calculateReadingTime = (text) => {
-      if (!text) return 1;
-      const wordsPerMinute = 200;
-      const wordCount = text.trim().split(/\s+/).length;
-      const minutes = Math.ceil(wordCount / wordsPerMinute);
-      return Math.max(1, minutes); // Minimum 1 minute
-    };
+    if (!text) return 1;
+    const wordsPerMinute = 200;
+    const wordCount = text.trim().split(/\s+/).length;
+    const minutes = Math.ceil(wordCount / wordsPerMinute);
+    return Math.max(1, minutes);
+  };
 
   const readingTime = calculateReadingTime(review.content);
 
-  const [scrollProgress, setScrollProgress] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const totalScroll = document.documentElement.scrollTop;
-      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scroll = totalScroll / windowHeight;
-      setScrollProgress(scroll * 100);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const [relatedReviews, setRelatedReviews] = useState([]);
-
-  useEffect(() => {
-    loadRelated();
-  }, [category]);
-
-  const loadRelated = async () => {
-    const allInCategory = await loadReviews(category);
-    const filtered = allInCategory.filter(r => r.slug !== id).slice(0, 3);
-    setRelatedReviews(filtered);
-  };
-
-    // Determine the correct Schema.org type based on category
   const schemaType = category === 'films' ? 'Movie' : category === 'music' ? 'MusicAlbum' : 'VideoGame';
-
-  // Build the JSON-LD structured data
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "Review",
-    "itemReviewed": {
-      "@type": schemaType,
-      "name": review.title
-    },
-    "author": {
-      "@type": "Person",
-      "name": "47 Reviews"
-    },
+    "itemReviewed": { "@type": schemaType, "name": review.title },
+    "author": { "@type": "Person", "name": "47 Reviews" },
     "datePublished": review.date,
-    "reviewRating": {
-      "@type": "Rating",
-      "ratingValue": review.rating,
-      "bestRating": "5",
-      "worstRating": "1"
-    },
+    "reviewRating": { "@type": "Rating", "ratingValue": review.rating, "bestRating": "5", "worstRating": "1" },
     "reviewBody": review.summary || review.content.substring(0, 200) + "..."
   };
 
   return (
     <div className="py-16">
       <div className="container-editorial max-w-3xl">
-                <nav className="flex items-center gap-2 text-sm text-muted mb-8" aria-label="Breadcrumb">
+        <nav className="flex items-center gap-2 text-sm text-muted mb-8" aria-label="Breadcrumb">
           <Link to="/" className="hover:text-ink transition-colors">Home</Link>
           <span className="text-gray-400">/</span>
-          <Link to={`/${category}`} className="hover:text-ink transition-colors">
-            {capitalize(category)}
-          </Link>
+          <Link to={`/${category}`} className="hover:text-ink transition-colors">{capitalize(category)}</Link>
           <span className="text-gray-400">/</span>
           <span className="text-ink font-medium">{review.title}</span>
         </nav>
 
         <article>
           <header className="mb-12">
-            <p className="text-xs text-muted uppercase tracking-widest mb-4">
-              {capitalize(category)}
-            </p>
-            
-            <h1 className="font-serif text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              {review.title}
-            </h1>
-
-            {review.subtitle && (
-              <p className="text-2xl text-muted mb-6 font-serif italic">{review.subtitle}</p>
-            )}
+            <p className="text-xs text-muted uppercase tracking-widest mb-4">{capitalize(category)}</p>
+            <h1 className="font-serif text-5xl md:text-6xl font-bold mb-6 leading-tight">{review.title}</h1>
+            {review.subtitle && <p className="text-2xl text-muted mb-6 font-serif italic">{review.subtitle}</p>}
 
             <div className="flex items-center gap-4 text-sm text-muted mb-8 pb-8 border-b border-gray-200">
-              <span className="text-2xl font-medium tracking-wide text-ink">
-                {renderStars(review.rating)}
-              </span>
+              <span className="text-2xl font-medium tracking-wide text-ink">{renderStars(review.rating)}</span>
               <span>{review.date}</span>
               <span>•</span>
               <span>{readingTime} min read</span>
@@ -147,131 +112,59 @@ function ReviewDetail() {
 
             {review.image && (
               <div className="bg-gray-100 mb-8 overflow-hidden flex justify-center">
-                <img 
-                  src={review.image} 
-                  alt={review.title}
-                  className="w-full h-auto max-h-[600px] object-contain"
-                />
+                <img src={review.image} alt={review.title} className="w-full h-auto max-h-[600px] object-contain" />
               </div>
             )}
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 py-8 border-t border-b border-gray-200 text-sm">
-              {review.developer && (
-                <div>
-                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Developer</p>
-                  <p className="font-medium text-ink">{review.developer}</p>
-                </div>
-              )}
-              {review.director && (
-                <div>
-                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Director</p>
-                  <p className="font-medium text-ink">{review.director}</p>
-                </div>
-              )}
-              {review.artist && (
-                <div>
-                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Artist</p>
-                  <p className="font-medium text-ink">{review.artist}</p>
-                </div>
-              )}
-              {review.platform && (
-                <div>
-                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Platform</p>
-                  <p className="font-medium text-ink">{review.platform}</p>
-                </div>
-              )}
-              {review.release_date && (
-                <div>
-                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Release Date</p>
-                  <p className="font-medium text-ink">{review.release_date}</p>
-                </div>
-              )}
-              {review.genre && (
-                <div>
-                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Genre</p>
-                  <p className="font-medium text-ink">{review.genre}</p>
-                </div>
-              )}
-              {review.runtime && (
-                <div>
-                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Runtime</p>
-                  <p className="font-medium text-ink">{review.runtime}</p>
-                </div>
-              )}
-              {review.playtime && (
-                <div>
-                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Playtime</p>
-                  <p className="font-medium text-ink">{review.playtime}</p>
-                </div>
-              )}
-              {review.favorite_track && (
-                <div>
-                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Favorite Track</p>
-                  <p className="font-medium text-ink">{review.favorite_track}</p>
-                </div>
-              )}
-              {review.least_favorite_track && (
-                <div>
-                  <p className="text-muted uppercase tracking-wider text-xs mb-1">Least Favorite Track</p>
-                  <p className="font-medium text-ink">{review.least_favorite_track}</p>
-                </div>
-              )}
+              {review.developer && <div><p className="text-muted uppercase tracking-wider text-xs mb-1">Developer</p><p className="font-medium text-ink">{review.developer}</p></div>}
+              {review.director && <div><p className="text-muted uppercase tracking-wider text-xs mb-1">Director</p><p className="font-medium text-ink">{review.director}</p></div>}
+              {review.artist && <div><p className="text-muted uppercase tracking-wider text-xs mb-1">Artist</p><p className="font-medium text-ink">{review.artist}</p></div>}
+              {review.platform && <div><p className="text-muted uppercase tracking-wider text-xs mb-1">Platform</p><p className="font-medium text-ink">{review.platform}</p></div>}
+              {review.release_date && <div><p className="text-muted uppercase tracking-wider text-xs mb-1">Release Date</p><p className="font-medium text-ink">{review.release_date}</p></div>}
+              {review.genre && <div><p className="text-muted uppercase tracking-wider text-xs mb-1">Genre</p><p className="font-medium text-ink">{review.genre}</p></div>}
+              {review.runtime && <div><p className="text-muted uppercase tracking-wider text-xs mb-1">Runtime</p><p className="font-medium text-ink">{review.runtime}</p></div>}
+              {review.playtime && <div><p className="text-muted uppercase tracking-wider text-xs mb-1">Playtime</p><p className="font-medium text-ink">{review.playtime}</p></div>}
+              {review.favorite_track && <div><p className="text-muted uppercase tracking-wider text-xs mb-1">Favorite Track</p><p className="font-medium text-ink">{review.favorite_track}</p></div>}
+              {review.least_favorite_track && <div><p className="text-muted uppercase tracking-wider text-xs mb-1">Least Favorite Track</p><p className="font-medium text-ink">{review.least_favorite_track}</p></div>}
             </div>
           </header>
 
           <div className="border border-gray-200 p-8 my-12 flex flex-col md:flex-row gap-8">
             <div className="md:w-1/3 flex flex-col justify-center border-b md:border-b-0 md:border-r border-gray-200 pb-6 md:pb-0 md:pr-8">
               <p className="text-xs text-muted uppercase tracking-widest mb-2">Score</p>
-              <div className="text-4xl font-serif font-bold text-ink">
-                {review.rating} <span className="text-lg text-muted font-sans font-normal">/ 5</span>
-              </div>
+              <div className="text-4xl font-serif font-bold text-ink">{review.rating} <span className="text-lg text-muted font-sans font-normal">/ 5</span></div>
               <div className="text-xl mt-2">{renderStars(review.rating)}</div>
             </div>
             {review.verdict && (
               <div className="md:w-2/3 flex flex-col justify-center">
                 <p className="text-xs text-muted uppercase tracking-widest mb-2">The Bottom Line</p>
-                <p className="font-serif text-xl italic text-ink leading-relaxed">
-                  {review.verdict}
-                </p>
+                <p className="font-serif text-xl italic text-ink leading-relaxed">{review.verdict}</p>
               </div>
             )}
           </div>
 
           <div className="space-y-6 text-lg leading-relaxed">
-            {review.summary && (
-              <p className="text-xl text-muted leading-relaxed mb-8 font-serif italic border-l-4 border-ink pl-6">
-                {review.summary}
-              </p>
-            )}
+            {review.summary && <p className="text-xl text-muted leading-relaxed mb-8 font-serif italic border-l-4 border-ink pl-6">{review.summary}</p>}
             {review.pull_quote && (
               <blockquote className="my-12 py-8 border-t border-b border-gray-200 text-center">
-                <p className="font-serif text-2xl md:text-3xl italic text-ink leading-relaxed">
-                    "{review.pull_quote}"
-                </p>
+                <p className="font-serif text-2xl md:text-3xl italic text-ink leading-relaxed">"{review.pull_quote}"</p>
               </blockquote>
             )}
 
             <div className="space-y-6">
-    {review.content.split('\n\n').map((paragraph, index) => (
-    <p 
-      key={index} 
-      className={index === 0 ? "first-letter:float-left first-letter:mr-3 first-letter:text-6xl first-letter:font-serif first-letter:font-bold first-letter:leading-none first-letter:text-ink" : ""}
-    >
-      {paragraph}
-    </p>
-  ))}
-</div>
+              {review.content.split('\n\n').map((paragraph, index) => (
+                <p key={index} className={index === 0 ? "first-letter:float-left first-letter:mr-3 first-letter:text-6xl first-letter:font-serif first-letter:font-bold first-letter:leading-none first-letter:text-ink" : ""}>
+                  {paragraph}
+                </p>
+              ))}
+            </div>
 
             {review.pros && review.pros.length > 0 && (
               <div className="mt-12 pt-8 border-t border-gray-200">
                 <h2 className="font-serif text-2xl font-bold mb-4">Pros</h2>
                 <ul className="space-y-2">
-                  {review.pros.map((pro, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-green-700 mr-3 font-bold">+</span>
-                      <span>{pro}</span>
-                    </li>
-                  ))}
+                  {review.pros.map((pro, index) => (<li key={index} className="flex items-start"><span className="text-green-700 mr-3 font-bold">+</span><span>{pro}</span></li>))}
                 </ul>
               </div>
             )}
@@ -280,12 +173,7 @@ function ReviewDetail() {
               <div className="mt-8">
                 <h2 className="font-serif text-2xl font-bold mb-4">Cons</h2>
                 <ul className="space-y-2">
-                  {review.cons.map((con, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-red-700 mr-3 font-bold">-</span>
-                      <span>{con}</span>
-                    </li>
-                  ))}
+                  {review.cons.map((con, index) => (<li key={index} className="flex items-start"><span className="text-red-700 mr-3 font-bold">-</span><span>{con}</span></li>))}
                 </ul>
               </div>
             )}
@@ -298,15 +186,12 @@ function ReviewDetail() {
             )}
           </div>
         </article>
+
         {relatedReviews.length > 0 && (
           <section className="mt-24 pt-12 border-t border-gray-200">
-            <h2 className="font-serif text-3xl font-bold mb-8">
-              More in {capitalize(category)}
-            </h2>
+            <h2 className="font-serif text-3xl font-bold mb-8">More in {capitalize(category)}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {relatedReviews.map(review => (
-                <ReviewCard key={review.slug} review={review} />
-              ))}
+              {relatedReviews.map(r => (<ReviewCard key={r.slug} review={r} />))}
             </div>
           </section>
         )}
