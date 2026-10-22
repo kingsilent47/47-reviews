@@ -152,6 +152,24 @@ function ReviewDetail() {
             </div>
           </header>
 
+          <div className="border border-gray-200 p-8 my-12 flex flex-col md:flex-row gap-8">
+            <div className="md:w-1/3 flex flex-col justify-center border-b md:border-b-0 md:border-r border-gray-200 pb-6 md:pb-0 md:pr-8">
+              <p className="text-xs text-muted uppercase tracking-widest mb-2">Score</p>
+              <div className="text-4xl font-serif font-bold text-ink">
+                {review.rating} <span className="text-lg text-muted font-sans font-normal">/ 5</span>
+              </div>
+              <div className="text-xl mt-2">{renderStars(review.rating)}</div>
+            </div>
+            {review.verdict && (
+              <div className="md:w-2/3 flex flex-col justify-center">
+                <p className="text-xs text-muted uppercase tracking-widest mb-2">The Bottom Line</p>
+                <p className="font-serif text-xl italic text-ink leading-relaxed">
+                  {review.verdict}
+                </p>
+              </div>
+            )}
+          </div>
+
           <div className="space-y-6 text-lg leading-relaxed">
             {review.summary && (
               <p className="text-xl text-muted leading-relaxed mb-8 font-serif italic border-l-4 border-ink pl-6">
