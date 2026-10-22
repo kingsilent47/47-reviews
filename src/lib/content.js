@@ -1,15 +1,19 @@
 // Read all JSON files in the content folder at build time
-// Note: ../../ goes up from src/lib/ to the root folder
 const modules = import.meta.glob('../../content/**/*.json', { eager: true });
 
 function parseReview(path, module) {
   const data = module.default || module;
   
-  // Extract category from path: ../../content/films/slug.json becomes 'films'
-  const category = path.split('/')[3];
+  // 1. Normalize path to use forward slashes (fixes Windows backslash issues)
+  const normalizedPath = path.replace(/\\/g, '/');
   
-  // Extract slug from path: ../../content/films/slug.json becomes 'slug'
-  const slug = path.split('/').pop().replace('.json', '');
+  // 2. Extract category using regex: matches "content/films/" or "content/games/"
+  const match = normalizedPath.match(/content\/([^/]+)\//);
+  const category = match ? match[1] : 'unknown';
+  
+  // 3. Extract slug from the filename (e.g., "need-for-speed.json" -> "need-for-speed")
+  const fileName = normalizedPath.split('/').pop();
+  const slug = fileName.replace('.json', '');
 
   return {
     ...data,
