@@ -160,10 +160,15 @@ function ReviewDetail() {
             )}
 
             <div className="space-y-6">
-              {review.content.split('\n\n').map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
-            </div>
+  {review.content.split('\n\n').map((paragraph, index) => (
+    <p 
+      key={index} 
+      className={index === 0 ? "first-letter:float-left first-letter:mr-3 first-letter:text-6xl first-letter:font-serif first-letter:font-bold first-letter:leading-none first-letter:text-ink" : ""}
+    >
+      {paragraph}
+    </p>
+  ))}
+</div>
 
             {review.pros && review.pros.length > 0 && (
               <div className="mt-12 pt-8 border-t border-gray-200">
