@@ -39,6 +39,15 @@ function ReviewDetail() {
         stars.push('☆');
       }
     }
+    const calculateReadingTime = (text) => {
+      if (!text) return 1;
+      const wordsPerMinute = 200;
+      const wordCount = text.trim().split(/\s+/).length;
+      const minutes = Math.ceil(wordCount / wordsPerMinute);
+      return Math.max(1, minutes); // Minimum 1 minute
+    };
+
+    const readingTime = calculateReadingTime(review.content);
     return stars.join('');
   };
 
