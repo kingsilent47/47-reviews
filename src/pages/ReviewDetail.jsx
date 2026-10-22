@@ -84,15 +84,43 @@ function ReviewDetail() {
     setRelatedReviews(filtered);
   };
 
+    // Determine the correct Schema.org type based on category
+  const schemaType = category === 'films' ? 'Movie' : category === 'music' ? 'MusicAlbum' : 'VideoGame';
+
+  // Build the JSON-LD structured data
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "Review",
+    "itemReviewed": {
+      "@type": schemaType,
+      "name": review.title
+    },
+    "author": {
+      "@type": "Person",
+      "name": "47 Reviews"
+    },
+    "datePublished": review.date,
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": review.rating,
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "reviewBody": review.summary || review.content.substring(0, 200) + "..."
+  };
+
   return (
     <div className="py-16">
       <div className="container-editorial max-w-3xl">
-        <Link 
-          to={`/${category}`}
-          className="inline-block text-sm text-muted hover:text-ink mb-8 transition-colors"
-        >
-          Back to {capitalize(category)}
-        </Link>
+                <nav className="flex items-center gap-2 text-sm text-muted mb-8" aria-label="Breadcrumb">
+          <Link to="/" className="hover:text-ink transition-colors">Home</Link>
+          <span className="text-gray-400">/</span>
+          <Link to={`/${category}`} className="hover:text-ink transition-colors">
+            {capitalize(category)}
+          </Link>
+          <span className="text-gray-400">/</span>
+          <span className="text-ink font-medium">{review.title}</span>
+        </nav>
 
         <article>
           <header className="mb-12">
@@ -224,7 +252,7 @@ function ReviewDetail() {
             )}
 
             <div className="space-y-6">
-  {review.content.split('\n\n').map((paragraph, index) => (
+    {review.content.split('\n\n').map((paragraph, index) => (
     <p 
       key={index} 
       className={index === 0 ? "first-letter:float-left first-letter:mr-3 first-letter:text-6xl first-letter:font-serif first-letter:font-bold first-letter:leading-none first-letter:text-ink" : ""}
