@@ -196,7 +196,7 @@ function ReviewDetail() {
             </div>
           </section>
         )}
-        <Comments />
+        <Comments reviewSlug={id} reviewTitle={review.title} />
       </div>
     </div>
   );
