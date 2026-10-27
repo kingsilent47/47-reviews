@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { loadReviewBySlug, loadReviews } from '../lib/content';
 import ReviewCard from '../components/ReviewCard';
 import Comments from '../components/Comments';
+import Reactions from '../components/Reactions';
 
 function ReviewDetail() {
   const { category, id } = useParams();
