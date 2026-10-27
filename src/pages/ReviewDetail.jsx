@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { loadReviewBySlug, loadReviews } from '../lib/content';
 import ReviewCard from '../components/ReviewCard';
+import Comments from '../components/Comments';
 
 function ReviewDetail() {
   const { category, id } = useParams();
@@ -195,6 +196,7 @@ function ReviewDetail() {
             </div>
           </section>
         )}
+        <Comments />
       </div>
     </div>
   );
