@@ -188,6 +188,8 @@ function ReviewDetail() {
           </div>
         </article>
 
+        <Reactions slug={id} />
+
         {relatedReviews.length > 0 && (
           <section className="mt-24 pt-12 border-t border-gray-200">
             <h2 className="font-serif text-3xl font-bold mb-8">More in {capitalize(category)}</h2>
