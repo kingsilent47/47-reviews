@@ -189,6 +189,32 @@ function ReviewDetail() {
           </div>
         </article>
 
+        {category === 'music' && (review.spotify_link || review.apple_music_link || review.youtube_music_link) && (
+          <div className="my-12 p-6 bg-gray-50 border border-gray-200 flex flex-col md:flex-row items-center gap-6">
+            <p className="font-serif font-bold text-lg text-ink md:w-1/4 text-center md:text-left">Listen on:</p>
+            <div className="flex flex-wrap gap-4 md:w-3/4 justify-center md:justify-start">
+              {review.spotify_link && (
+                <a href={review.spotify_link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 bg-[#1DB954] text-white rounded-full hover:opacity-90 transition-opacity">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                  <span className="font-medium text-sm">Spotify</span>
+                </a>
+              )}
+              {review.apple_music_link && (
+                <a href={review.apple_music_link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 bg-black text-white rounded-full hover:opacity-90 transition-opacity">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 00-1.877-.726 10.496 10.496 0 00-1.564-.15c-.04-.003-.083-.01-.124-.013H5.986c-.152.01-.303.017-.455.026-.747.043-1.49.123-2.193.403-1.336.53-2.3 1.452-2.865 2.78-.192.448-.292.925-.363 1.408-.056.392-.088.785-.1 1.18 0 .032-.007.062-.01.093v12.223c.01.14.017.283.027.424.05.815.154 1.624.497 2.373.65 1.42 1.738 2.353 3.234 2.802.42.127.856.187 1.293.228.555.053 1.11.06 1.667.06h11.03c.525 0 1.048-.034 1.57-.1.923-.12 1.77-.43 2.513-1.008.83-.645 1.4-1.48 1.68-2.5.12-.43.18-.87.22-1.31.03-.37.04-.74.04-1.11V6.125zM16.94 16.74c0 .21-.03.42-.1.62-.16.47-.5.78-.98.92-.22.06-.45.09-.68.1-.42.02-.84.03-1.26.03h-1.2c-.42 0-.84-.01-1.26-.03-.23-.01-.46-.04-.68-.1-.48-.14-.82-.45-.98-.92-.07-.2-.1-.41-.1-.62V10.6c0-.21.03-.42.1-.62.16-.47.5-.78.98-.92.22-.06.45-.09.68-.1.42-.02.84-.03 1.26-.03h1.2c.42 0 .84.01 1.26.03.23.01.46.04.68.1.48.14.82.45.98.92.07.2.1.41.1.62v6.14zm-3.54-7.82c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+                  <span className="font-medium text-sm">Apple Music</span>
+                </a>
+              )}
+              {review.youtube_music_link && (
+                <a href={review.youtube_music_link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 bg-[#FF0000] text-white rounded-full hover:opacity-90 transition-opacity">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                  <span className="font-medium text-sm">YouTube Music</span>
+                </a>
+              )}
+            </div>
+          </div>
+        )}
+
         <Reactions slug={id} />
 
         {relatedReviews.length > 0 && (
