@@ -44,6 +44,9 @@ collections:
       - { label: "Genre", name: "genre", widget: "string" }
       - { label: "Favorite Track", name: "favorite_track", widget: "string", required: false }
       - { label: "Least Favorite Track", name: "least_favorite_track", widget: "string", required: false }
+      - { label: "Spotify Link", name: "spotify_link", widget: "string", required: false }
+      - { label: "Apple Music Link", name: "apple_music_link", widget: "string", required: false }
+      - { label: "YouTube Music Link", name: "youtube_music_link", widget: "string", required: false }
       - { label: "Rating", name: "rating", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
       - { label: "Review Date", name: "date", widget: "date" }
       - { label: "Cover Image", name: "image", widget: "image", required: false }
