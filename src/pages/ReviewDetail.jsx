@@ -4,6 +4,7 @@ import { loadReviewBySlug, loadReviews } from '../lib/content';
 import ReviewCard from '../components/ReviewCard';
 import Comments from '../components/Comments';
 import Reactions from '../components/Reactions';
+import ShareButtons from '../components/ShareButtons';
 
 function ReviewDetail() {
   const { category, id } = useParams();
@@ -215,6 +216,8 @@ function ReviewDetail() {
             </div>
           </div>
         )}
+
+        <ShareButtons title={review.title} url={window.location.href} />
 
         <Reactions slug={id} />
 
