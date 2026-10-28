@@ -1,0 +1,17 @@
+{
+  "name": "47 Reviews",
+  "short_name": "47 Reviews",
+  "description": "Honest reviews of films, music, and video games.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafafa",
+  "theme_color": "#1a1a1a",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
