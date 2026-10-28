@@ -5,6 +5,7 @@ import ReviewCard from '../components/ReviewCard';
 import Comments from '../components/Comments';
 import Reactions from '../components/Reactions';
 import ShareButtons from '../components/ShareButtons';
+import BackToTop from '../components/BackToTop';
 
 function ReviewDetail() {
   const { category, id } = useParams();
@@ -230,6 +231,8 @@ function ReviewDetail() {
           </section>
         )}
         <Comments reviewSlug={id} reviewTitle={review.title} />
+
+        <BackToTop />
       </div>
     </div>
   );
