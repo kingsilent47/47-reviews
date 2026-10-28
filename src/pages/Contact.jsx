@@ -26,13 +26,6 @@ function Contact() {
               Have a suggestion for what I should review next? Want to discuss a review? Send me a message.
             </p>
 
-            <div className="space-y-2 text-lg">
-              <p>
-                <strong>Email:</strong> hello@47reviews.com
-              </p>
-            </div>
-          </div>
-
           <div className="pt-8 border-t border-gray-200">
             <h2 className="font-serif text-2xl font-bold mb-6">Send a Message</h2>
             
