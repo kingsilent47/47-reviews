@@ -13,15 +13,25 @@ function ReviewArchive() {
   }, []);
 
   const loadReviewsData = async () => {
-    const data = await loadReviews();
-    setReviews(data);
+    try {
+      const data = await loadReviews();
+      setReviews(data || []);
+    } catch (error) {
+      console.error("Failed to load reviews:", error);
+      setReviews([]);
+    }
   };
 
   const filteredReviews = reviews.filter(review => {
     if (categoryFilter !== 'all' && review.category !== categoryFilter) return false;
-    if (yearFilter !== 'all' && !review.date.includes(yearFilter)) return false;
+    
+    // Safely check date
+    if (yearFilter !== 'all') {
+      if (!review.date || !review.date.includes(yearFilter)) return false;
+    }
+    
     if (ratingFilter !== 'all') {
-      const rating = review.rating;
+      const rating = review.rating || 0;
       if (ratingFilter === '5' && rating < 4.5) return false;
       if (ratingFilter === '4' && (rating < 3.5 || rating >= 4.5)) return false;
       if (ratingFilter === '3' && (rating < 2.5 || rating >= 3.5)) return false;
@@ -31,7 +41,11 @@ function ReviewArchive() {
     return true;
   });
 
-  const years = [...new Set(reviews.map(r => r.date.split('-')[0]))].sort().reverse();
+  // Safely extract years, ignoring reviews without dates
+  const years = [...new Set(reviews
+    .map(r => r.date ? r.date.split('-')[0] : null)
+    .filter(Boolean)
+  )].sort().reverse();
 
   return (
     <div className="py-16">
@@ -45,7 +59,7 @@ function ReviewArchive() {
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 focus:border-ink focus:outline-none"
+              className="w-full px-4 py-2 border border-gray-300 focus:border-ink focus:outline-none rounded-none"
             >
               <option value="all">All Categories</option>
               <option value="films">Films</option>
@@ -59,7 +73,7 @@ function ReviewArchive() {
             <select
               value={yearFilter}
               onChange={(e) => setYearFilter(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 focus:border-ink focus:outline-none"
+              className="w-full px-4 py-2 border border-gray-300 focus:border-ink focus:outline-none rounded-none"
             >
               <option value="all">All Years</option>
               {years.map(year => (
@@ -73,7 +87,7 @@ function ReviewArchive() {
             <select
               value={ratingFilter}
               onChange={(e) => setRatingFilter(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 focus:border-ink focus:outline-none"
+              className="w-full px-4 py-2 border border-gray-300 focus:border-ink focus:outline-none rounded-none"
             >
               <option value="all">All Ratings</option>
               <option value="5">5 Stars (Masterpiece)</option>
