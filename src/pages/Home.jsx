@@ -13,7 +13,7 @@ function Home() {
 
   const loadReviewsData = async () => {
     const data = await loadReviews();
-    setReviews(data);
+    setReviews(data || []);
   };
 
   const latestReviews = reviews.slice(0, 6);
@@ -58,7 +58,7 @@ function Home() {
               placeholder="Search reviews..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 focus:border-ink focus:outline-none transition-colors"
+              className="w-full px-4 py-3 border border-gray-300 focus:border-ink focus:outline-none transition-colors rounded-none"
             />
           </div>
 
@@ -85,14 +85,18 @@ function Home() {
             <section className="border-b border-gray-200 py-16">
               <div className="container-editorial">
                 <h2 className="font-serif text-3xl font-bold mb-8">Featured Review</h2>
-                <Link to={`/${featuredReview.category}/${featuredReview.slug}`} className="group block">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="aspect-[2/3] bg-gray-100 overflow-hidden">
+                <Link 
+                  to={`/${featuredReview.category}/${featuredReview.slug}`} 
+                  className="group block border border-gray-200 hover:border-ink transition-all duration-300 bg-paper overflow-hidden"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+                    <div className="bg-gray-100 overflow-hidden min-h-[300px] md:min-h-[500px] flex items-center justify-center">
                       {featuredReview.image ? (
                         <img
                           src={featuredReview.image}
                           alt={featuredReview.title}
-                          className="w-full h-full object-cover"
+                          loading="eager"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-muted">
@@ -100,22 +104,27 @@ function Home() {
                         </div>
                       )}
                     </div>
-                    <div className="flex flex-col justify-center">
-                      <p className="text-sm text-muted uppercase tracking-wide mb-2">
+                    <div className="p-8 md:p-12 flex flex-col justify-center">
+                      <p className="text-xs text-muted uppercase tracking-widest mb-4">
                         {featuredReview.category}
                       </p>
-                      <h3 className="font-serif text-4xl font-bold mb-4 group-hover:text-gray-600 transition-colors">
+                      <h3 className="font-serif text-4xl font-bold mb-4 leading-tight group-hover:underline underline-offset-4 decoration-1 transition-all">
                         {featuredReview.title}
                       </h3>
                       {featuredReview.subtitle && (
-                        <p className="text-lg text-muted mb-4">{featuredReview.subtitle}</p>
+                        <p className="text-lg text-muted mb-4 font-serif italic">{featuredReview.subtitle}</p>
                       )}
-                      <p className="text-muted leading-relaxed mb-6">
+                      <p className="text-muted leading-relaxed mb-6 line-clamp-4">
                         {featuredReview.summary}
                       </p>
-                      <span className="text-lg font-medium tracking-wide">
-                        {renderStars(featuredReview.rating)}
-                      </span>
+                      <div className="flex items-center justify-between pt-6 border-t border-gray-200">
+                        <span className="text-lg font-medium tracking-wide text-ink">
+                          {renderStars(featuredReview.rating)}
+                        </span>
+                        <span className="text-xs text-muted uppercase tracking-wider group-hover:text-ink transition-colors">
+                          Read Review &rarr;
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </Link>
