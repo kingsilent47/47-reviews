@@ -13,6 +13,7 @@ import Terms from './pages/Terms';
 import ReviewDetail from './pages/ReviewDetail';
 import PageTransition from './components/PageTransition';
 import LoadingScreen from './components/LoadingScreen';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -30,22 +31,25 @@ function App() {
   }
 
   return (
-    <PageTransition>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="films" element={<Films />} />
-          <Route path="music" element={<Music />} />
-          <Route path="games" element={<Games />} />
-          <Route path="archive" element={<ReviewArchive />} />
-          <Route path="about" element={<About />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="privacy" element={<Privacy />} />
-          <Route path="terms" element={<Terms />} />
-          <Route path=":category/:id" element={<ReviewDetail />} />
-        </Route>
-      </Routes>
-    </PageTransition>
+    <>
+      <ScrollToTop />
+      <PageTransition>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="films" element={<Films />} />
+            <Route path="music" element={<Music />} />
+            <Route path="games" element={<Games />} />
+            <Route path="archive" element={<ReviewArchive />} />
+            <Route path="about" element={<About />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="privacy" element={<Privacy />} />
+            <Route path="terms" element={<Terms />} />
+            <Route path=":category/:id" element={<ReviewDetail />} />
+          </Route>
+        </Routes>
+      </PageTransition>
+    </>
   );
 }
 
