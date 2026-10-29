@@ -21,14 +21,15 @@ function ReviewCard({ review }) {
   return (
     <Link
       to={`/${review.category}/${review.slug}`}
-      className="group block"
+      className="group block border border-gray-200 hover:border-ink transition-all duration-300 bg-paper overflow-hidden"
     >
-      <div className="aspect-[16/9] bg-gray-100 mb-4 overflow-hidden">
+      <div className="aspect-[16/9] bg-gray-100 overflow-hidden">
         {review.image ? (
           <img
             src={review.image}
             alt={review.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-muted text-sm">
@@ -37,12 +38,12 @@ function ReviewCard({ review }) {
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="p-5 space-y-2">
         <p className="text-xs text-muted uppercase tracking-wide">
           {review.category}
         </p>
 
-        <h3 className="font-serif font-bold text-lg leading-tight group-hover:text-gray-600 transition-colors">
+        <h3 className="font-serif font-bold text-lg leading-tight group-hover:underline underline-offset-4 decoration-1 transition-all">
           {review.title}
         </h3>
 
@@ -50,7 +51,7 @@ function ReviewCard({ review }) {
           <p className="text-sm text-muted">{review.subtitle}</p>
         )}
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between pt-2">
           <span className="text-sm font-medium tracking-wide">
             {renderStars(review.rating)}
           </span>
