@@ -34,3 +34,45 @@
 .dark .border-gray-300 { border-color: #404040; }
 .dark .hover\:bg-gray-800:hover { background-color: #333333; }
 .dark .focus\:border-ink:focus { border-color: var(--color-ink); }
+
+/* --- Custom Scrollbar & Text Selection --- */
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-paper);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}
+
+/* Text Selection */
+::selection {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+::-moz-selection {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+/* Dark Mode Scrollbar Overrides */
+.dark ::-webkit-scrollbar-track {
+  background: #171717;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #e5e5e5;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+.dark ::selection,
+.dark ::-moz-selection {
+  background: #e5e5e5;
+  color: #171717;
+}
