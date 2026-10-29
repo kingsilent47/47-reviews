@@ -13,6 +13,7 @@ function ReviewDetail() {
   const [review, setReview] = useState(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [relatedReviews, setRelatedReviews] = useState([]);
+  const [isImageOpen, setIsImageOpen] = useState(false);
 
   useEffect(() => {
     const loadReview = async () => {
@@ -114,9 +115,37 @@ function ReviewDetail() {
               <span>{readingTime} min read</span>
             </div>
 
-            {review.image && (
-              <div className="bg-gray-100 mb-8 overflow-hidden flex justify-center">
-                <img src={review.image} alt={review.title} className="w-full h-auto max-h-[600px] object-contain" />
+                        {review.image && (
+              <div 
+                onClick={() => setIsImageOpen(true)}
+                className="bg-gray-100 mb-8 overflow-hidden flex justify-center items-center min-h-[300px] md:min-h-[400px] cursor-zoom-in hover:bg-gray-200 transition-colors"
+              >
+                <img 
+                  src={review.image} 
+                  alt={review.title} 
+                  loading="eager"
+                  className="w-full h-auto max-h-[600px] object-contain" 
+                />
+              </div>
+            )}
+
+            {/* Lightbox Overlay */}
+            {isImageOpen && review.image && (
+              <div 
+                className="fixed inset-0 bg-black z-[9999] flex items-center justify-center p-4 cursor-zoom-out"
+                onClick={() => setIsImageOpen(false)}
+              >
+                <button 
+                  className="absolute top-6 right-6 text-white text-5xl font-serif leading-none hover:text-gray-400 transition-colors"
+                  aria-label="Close image"
+                >
+                  &times;
+                </button>
+                <img 
+                  src={review.image} 
+                  alt={review.title} 
+                  className="max-w-full max-h-full object-contain" 
+                />
               </div>
             )}
 
