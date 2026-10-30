@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Films from './pages/Films';
 import Music from './pages/Music';
 import Games from './pages/Games';
+import Playlists from './pages/Playlists'; // <-- THIS WAS MISSING
 import ReviewArchive from './pages/ReviewArchive';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -19,7 +20,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Show loading screen for 1 second on initial load
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1000);
@@ -40,6 +40,7 @@ function App() {
             <Route path="films" element={<Films />} />
             <Route path="music" element={<Music />} />
             <Route path="games" element={<Games />} />
+            <Route path="playlists" element={<Playlists />} /> {/* <-- THIS WAS MISSING */}
             <Route path="archive" element={<ReviewArchive />} />
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
