@@ -5,134 +5,134 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager | 47 Reviews</title>
   <style>
-    /* --- 47 Reviews Admin Styling: Sharp & Monochromatic --- */
+    /* --- 47 Reviews Admin Theme: Sharp, Monochromatic, No Fluff --- */
     :root {
-      --color-ink: #1a1a1a;
-      --color-paper: #fafafa;
-      --color-border: #d4d4d4;
+      --ink: #1a1a1a;
+      --paper: #fafafa;
+      --border: #e5e5e5;
+      --muted: #737373;
     }
 
     body {
-      background-color: var(--color-paper) !important;
+      background-color: var(--paper) !important;
       font-family: system-ui, -apple-system, sans-serif !important;
+      color: var(--ink) !important;
     }
 
-    /* 1. Force sharp corners globally */
+    /* 1. THE GOLDEN RULE: NO ROUNDED CORNERS ANYWHERE */
     * {
       border-radius: 0 !important;
+      box-shadow: none !important;
     }
 
-    /* 2. Sidebar Navigation */
-    div[role="navigation"], aside {
+    /* 2. SIDEBAR NAVIGATION */
+    aside {
       background-color: #ffffff !important;
-      border-right: 1px solid var(--color-border) !important;
+      border-right: 1px solid var(--border) !important;
     }
     
-    div[role="navigation"] a, aside a {
-      color: #737373 !important;
+    aside a, [class*="SidebarNavItem"] {
+      color: var(--muted) !important;
       font-weight: 600 !important;
       text-transform: uppercase !important;
       letter-spacing: 0.05em !important;
       font-size: 0.75rem !important;
       border-left: 3px solid transparent !important;
+      padding-left: 1.5rem !important;
+      transition: all 0.2s ease !important;
     }
     
-    div[role="navigation"] a:hover, aside a:hover,
-    div[role="navigation"] a[aria-current="page"], aside a[aria-current="page"] {
-      color: var(--color-ink) !important;
+    aside a:hover, aside a.active, [class*="SidebarNavItem"][aria-current="page"] {
+      color: var(--ink) !important;
       background-color: #f5f5f5 !important;
-      border-left: 3px solid var(--color-ink) !important;
+      border-left: 3px solid var(--ink) !important;
     }
 
-    /* 3. Top Bar */
-    header {
+    /* 3. TOP HEADER BAR */
+    header, [class*="TopBar"] {
       background-color: #ffffff !important;
-      border-bottom: 1px solid var(--color-border) !important;
-      box-shadow: none !important;
+      border-bottom: 1px solid var(--border) !important;
     }
 
-    /* 4. Buttons */
+    /* 4. BUTTONS (Sharp & Editorial) */
     button {
-      box-shadow: none !important;
       font-weight: 600 !important;
       text-transform: uppercase !important;
       letter-spacing: 0.05em !important;
+      font-size: 0.75rem !important;
       transition: all 0.2s ease !important;
       cursor: pointer !important;
     }
 
-    /* Primary Buttons (Save, Publish, Add New) */
-    button[type="submit"], button[class*="Primary"], button[class*="Add"] {
-      background-color: var(--color-ink) !important;
+    /* Primary Buttons (Publish, Save, Add New) */
+    button[class*="Primary"], button[type="submit"], button[class*="Add"] {
+      background-color: var(--ink) !important;
       color: #ffffff !important;
-      border: 1px solid var(--color-ink) !important;
+      border: 1px solid var(--ink) !important;
     }
 
-    button[type="submit"]:hover, button[class*="Primary"]:hover, button[class*="Add"]:hover {
+    button[class*="Primary"]:hover, button[type="submit"]:hover {
       background-color: #333333 !important;
       border-color: #333333 !important;
     }
 
     /* Secondary Buttons */
-    button:not([type="submit"]):not([class*="Primary"]):not([class*="Add"]) {
+    button:not([class*="Primary"]):not([type="submit"]) {
       background-color: transparent !important;
-      color: var(--color-ink) !important;
-      border: 1px solid var(--color-border) !important;
+      color: var(--ink) !important;
+      border: 1px solid var(--border) !important;
     }
 
-    button:not([type="submit"]):not([class*="Primary"]):not([class*="Add"]):hover {
-      border-color: var(--color-ink) !important;
+    button:not([class*="Primary"]):not([type="submit"]):hover {
+      border-color: var(--ink) !important;
       background-color: #f5f5f5 !important;
     }
 
-    /* 5. Inputs, Textareas, Selects */
+    /* 5. FORM INPUTS & TEXTAREAS */
     input, textarea, select {
-      border: 1px solid var(--color-border) !important;
+      border: 1px solid var(--border) !important;
       background-color: #ffffff !important;
-      color: var(--color-ink) !important;
-      box-shadow: none !important;
+      color: var(--ink) !important;
       transition: border-color 0.2s ease !important;
     }
 
     input:focus, textarea:focus, select:focus {
-      border-color: var(--color-ink) !important;
-      outline: 2px solid var(--color-ink) !important;
+      border-color: var(--ink) !important;
+      outline: 2px solid var(--ink) !important;
       outline-offset: -2px !important;
     }
 
-    /* 6. Markdown Editor */
-    .toolbar {
+    /* 6. MARKDOWN EDITOR TOOLBAR */
+    [class*="Toolbar"] {
       background-color: #f5f5f5 !important;
-      border: 1px solid var(--color-border) !important;
+      border: 1px solid var(--border) !important;
       border-bottom: none !important;
     }
 
-    .toolbar button {
-      color: #737373 !important;
+    [class*="Toolbar"] button {
+      color: var(--muted) !important;
     }
     
-    .toolbar button:hover {
-      color: var(--color-ink) !important;
+    [class*="Toolbar"] button:hover {
+      color: var(--ink) !important;
       background-color: #e5e5e5 !important;
     }
 
-    .textarea {
-      border: 1px solid var(--color-border) !important;
+    [class*="Textarea"] {
+      border: 1px solid var(--border) !important;
       border-top: none !important;
-      background-color: #ffffff !important;
     }
 
-    /* 7. Login Page Specifics */
-    .css-1wvake5-login, [class*="Login"] {
-      background-color: var(--color-paper) !important;
+    /* 7. LOGIN PAGE SPECIFICS */
+    [class*="Login"] {
+      background-color: var(--paper) !important;
     }
     
-    .css-1wvake5-login .css-1wvake5-card, [class*="Login"] [class*="Card"] {
-      border: 1px solid var(--color-border) !important;
-      box-shadow: none !important;
+    [class*="Login"] [class*="Card"] {
+      border: 1px solid var(--border) !important;
     }
 
-    .css-1wvake5-login h1, [class*="Login"] h1 {
+    [class*="Login"] h1 {
       font-family: 'Georgia', 'Times New Roman', serif !important;
       font-weight: 700 !important;
       letter-spacing: -0.02em !important;
@@ -140,8 +140,9 @@
   </style>
 </head>
 <body>
-  <div id="nc-root"></div>
+  <!-- Include the script that enables Netlify Identity on the page -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <!-- Include the Decap CMS script -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
