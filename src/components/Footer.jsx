@@ -1,40 +1,74 @@
 import { Link } from 'react-router-dom';
 
 function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  const exploreLinks = [
+    { path: '/', label: 'Home' },
+    { path: '/films', label: 'Films' },
+    { path: '/music', label: 'Music' },
+    { path: '/games', label: 'Games' },
+    { path: '/archive', label: 'Archive' },
+  ];
+
+  const infoLinks = [
+    { path: '/about', label: 'About' },
+    { path: '/contact', label: 'Contact' },
+    { path: '/privacy', label: 'Privacy Policy' },
+    { path: '/terms', label: 'Terms of Service' },
+  ];
+
   return (
-    <footer className="border-t border-gray-200 mt-20">
-      <div className="container-editorial py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="border-t border-gray-200 bg-paper mt-20">
+      <div className="container-editorial py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+          {/* Brand Column */}
           <div>
-            <h3 className="font-serif font-bold text-lg mb-4">47 Reviews</h3>
-            <p className="text-sm text-muted leading-relaxed">
-              Honest reviews of films, music, and video games. No clickbait, no inflated scores, just thoughtful analysis.
+            <Link to="/" className="text-2xl font-serif font-bold tracking-tight text-ink">
+              47 Reviews
+            </Link>
+            <p className="text-sm text-muted mt-4 leading-relaxed max-w-xs">
+              Honest reviews. No fluff. A personal corner of the internet dedicated to thoughtful critiques of films, music, and video games.
             </p>
           </div>
 
+          {/* Explore Column */}
           <div>
-            <h4 className="font-semibold text-sm mb-4">Navigate</h4>
-            <ul className="space-y-2 text-sm">
-              <li><Link to="/films" className="text-muted hover:text-ink">Films</Link></li>
-              <li><Link to="/music" className="text-muted hover:text-ink">Music</Link></li>
-              <li><Link to="/games" className="text-muted hover:text-ink">Games</Link></li>
-              <li><Link to="/archive" className="text-muted hover:text-ink">Archive</Link></li>
+            <h3 className="text-xs font-medium text-ink uppercase tracking-widest mb-6">Explore</h3>
+            <ul className="space-y-3">
+              {exploreLinks.map(link => (
+                <li key={link.path}>
+                  <Link to={link.path} className="text-sm text-muted hover:text-ink transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
+          {/* Information Column */}
           <div>
-            <h4 className="font-semibold text-sm mb-4">Information</h4>
-            <ul className="space-y-2 text-sm">
-              <li><Link to="/about" className="text-muted hover:text-ink">About</Link></li>
-              <li><Link to="/contact" className="text-muted hover:text-ink">Contact</Link></li>
-              <li><Link to="/privacy" className="text-muted hover:text-ink">Privacy Policy</Link></li>
-              <li><Link to="/terms" className="text-muted hover:text-ink">Terms of Service</Link></li>
+            <h3 className="text-xs font-medium text-ink uppercase tracking-widest mb-6">Information</h3>
+            <ul className="space-y-3">
+              {infoLinks.map(link => (
+                <li key={link.path}>
+                  <Link to={link.path} className="text-sm text-muted hover:text-ink transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-200 text-center text-sm text-muted">
-          <p>&copy; {new Date().getFullYear()} 47 Reviews. All rights reserved.</p>
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-muted">
+            &copy; {currentYear} 47 Reviews. All rights reserved.
+          </p>
+          <p className="text-xs text-muted italic">
+            Designed with sharp edges and zero fluff.
+          </p>
         </div>
       </div>
     </footer>
