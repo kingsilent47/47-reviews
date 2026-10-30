@@ -4,6 +4,140 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager | 47 Reviews</title>
+  <style>
+    /* --- 47 Reviews Admin Styling: Sharp & Monochromatic --- */
+    :root {
+      --color-ink: #1a1a1a;
+      --color-paper: #fafafa;
+      --color-border: #d4d4d4;
+    }
+
+    body {
+      background-color: var(--color-paper) !important;
+      font-family: system-ui, -apple-system, sans-serif !important;
+    }
+
+    /* 1. Force sharp corners globally */
+    * {
+      border-radius: 0 !important;
+    }
+
+    /* 2. Sidebar Navigation */
+    div[role="navigation"], aside {
+      background-color: #ffffff !important;
+      border-right: 1px solid var(--color-border) !important;
+    }
+    
+    div[role="navigation"] a, aside a {
+      color: #737373 !important;
+      font-weight: 600 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.05em !important;
+      font-size: 0.75rem !important;
+      border-left: 3px solid transparent !important;
+    }
+    
+    div[role="navigation"] a:hover, aside a:hover,
+    div[role="navigation"] a[aria-current="page"], aside a[aria-current="page"] {
+      color: var(--color-ink) !important;
+      background-color: #f5f5f5 !important;
+      border-left: 3px solid var(--color-ink) !important;
+    }
+
+    /* 3. Top Bar */
+    header {
+      background-color: #ffffff !important;
+      border-bottom: 1px solid var(--color-border) !important;
+      box-shadow: none !important;
+    }
+
+    /* 4. Buttons */
+    button {
+      box-shadow: none !important;
+      font-weight: 600 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.05em !important;
+      transition: all 0.2s ease !important;
+      cursor: pointer !important;
+    }
+
+    /* Primary Buttons (Save, Publish, Add New) */
+    button[type="submit"], button[class*="Primary"], button[class*="Add"] {
+      background-color: var(--color-ink) !important;
+      color: #ffffff !important;
+      border: 1px solid var(--color-ink) !important;
+    }
+
+    button[type="submit"]:hover, button[class*="Primary"]:hover, button[class*="Add"]:hover {
+      background-color: #333333 !important;
+      border-color: #333333 !important;
+    }
+
+    /* Secondary Buttons */
+    button:not([type="submit"]):not([class*="Primary"]):not([class*="Add"]) {
+      background-color: transparent !important;
+      color: var(--color-ink) !important;
+      border: 1px solid var(--color-border) !important;
+    }
+
+    button:not([type="submit"]):not([class*="Primary"]):not([class*="Add"]):hover {
+      border-color: var(--color-ink) !important;
+      background-color: #f5f5f5 !important;
+    }
+
+    /* 5. Inputs, Textareas, Selects */
+    input, textarea, select {
+      border: 1px solid var(--color-border) !important;
+      background-color: #ffffff !important;
+      color: var(--color-ink) !important;
+      box-shadow: none !important;
+      transition: border-color 0.2s ease !important;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--color-ink) !important;
+      outline: 2px solid var(--color-ink) !important;
+      outline-offset: -2px !important;
+    }
+
+    /* 6. Markdown Editor */
+    .toolbar {
+      background-color: #f5f5f5 !important;
+      border: 1px solid var(--color-border) !important;
+      border-bottom: none !important;
+    }
+
+    .toolbar button {
+      color: #737373 !important;
+    }
+    
+    .toolbar button:hover {
+      color: var(--color-ink) !important;
+      background-color: #e5e5e5 !important;
+    }
+
+    .textarea {
+      border: 1px solid var(--color-border) !important;
+      border-top: none !important;
+      background-color: #ffffff !important;
+    }
+
+    /* 7. Login Page Specifics */
+    .css-1wvake5-login, [class*="Login"] {
+      background-color: var(--color-paper) !important;
+    }
+    
+    .css-1wvake5-login .css-1wvake5-card, [class*="Login"] [class*="Card"] {
+      border: 1px solid var(--color-border) !important;
+      box-shadow: none !important;
+    }
+
+    .css-1wvake5-login h1, [class*="Login"] h1 {
+      font-family: 'Georgia', 'Times New Roman', serif !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.02em !important;
+    }
+  </style>
 </head>
 <body>
   <div id="nc-root"></div>
