@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 function Footer() {
   const currentYear = new Date().getFullYear();
 
-  const exploreLinks = [
+    const exploreLinks = [
     { path: '/', label: 'Home' },
     { path: '/films', label: 'Films' },
     { path: '/music', label: 'Music' },
     { path: '/games', label: 'Games' },
+    { path: '/playlists', label: 'Playlists' },
     { path: '/archive', label: 'Archive' },
   ];
 
