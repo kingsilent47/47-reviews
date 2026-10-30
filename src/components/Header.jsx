@@ -6,15 +6,15 @@ function Header() {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navItems = [
+    const navItems = [
     { path: '/', label: 'Home' },
     { path: '/films', label: 'Films' },
     { path: '/music', label: 'Music' },
     { path: '/games', label: 'Games' },
+    { path: '/playlists', label: 'Playlists' },
     { path: '/archive', label: 'Archive' },
     { path: '/about', label: 'About' },
   ];
-
   return (
     <header className="border-b border-gray-200 bg-paper sticky top-0 z-50">
       <div className="container-editorial">
