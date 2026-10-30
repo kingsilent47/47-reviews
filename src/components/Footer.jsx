@@ -62,15 +62,12 @@ function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
+                {/* Bottom Bar */}
+        <div className="pt-8 border-t border-gray-200 text-center">
           <p className="text-xs text-muted">
             &copy; {currentYear} 47 Reviews. All rights reserved.
           </p>
-          <p className="text-xs text-muted italic">
-            Designed with sharp edges and zero fluff.
-          </p>
         </div>
-      </div>
     </footer>
   );
 }
