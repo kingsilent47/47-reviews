@@ -62,12 +62,12 @@ function Footer() {
         </div>
 
         {/* Bottom Bar */}
-                {/* Bottom Bar */}
         <div className="pt-8 border-t border-gray-200 text-center">
           <p className="text-xs text-muted">
             &copy; {currentYear} 47 Reviews. All rights reserved.
           </p>
         </div>
+      </div>
     </footer>
   );
 }
