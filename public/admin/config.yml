@@ -78,3 +78,16 @@ collections:
       - { label: "Pull Quote", name: "pull_quote", widget: "text", required: false }
       - { label: "Cons", name: "cons", widget: "list", required: false }
       - { label: "Verdict", name: "verdict", widget: "text", required: false }
+
+  - name: "playlists"
+    label: "Playlists"
+    folder: "content/playlists"
+    create: true
+    slug: "{{slug}}"
+    format: json
+    extension: json
+    fields:
+      - { label: "Playlist Name", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Apple Music Link", name: "url", widget: "string" }
+      - { label: "Order", name: "order", widget: "number", value_type: "int", min: 0, step: 1, default: 0, hint: "Lower numbers appear first" }
