@@ -4,14 +4,10 @@ const modules = import.meta.glob('../../content/**/*.json', { eager: true });
 function parseReview(path, module) {
   const data = module.default || module;
   
-  // 1. Normalize path to use forward slashes (fixes Windows backslash issues)
   const normalizedPath = path.replace(/\\/g, '/');
-  
-  // 2. Extract category using regex: matches "content/films/" or "content/games/"
   const match = normalizedPath.match(/content\/([^/]+)\//);
   const category = match ? match[1] : 'unknown';
   
-  // 3. Extract slug from the filename (e.g., "need-for-speed.json" -> "need-for-speed")
   const fileName = normalizedPath.split('/').pop();
   const slug = fileName.replace('.json', '');
 
@@ -23,9 +19,10 @@ function parseReview(path, module) {
 }
 
 export async function loadReviews(category = null) {
-  const reviews = Object.entries(modules).map(([path, module]) =>
-    parseReview(path, module)
-  );
+  // Filter out the 'playlists' folder so they don't mix with reviews
+  const reviews = Object.entries(modules)
+    .filter(([path]) => !path.includes('/playlists/'))
+    .map(([path, module]) => parseReview(path, module));
 
   if (category) {
     return reviews
@@ -39,4 +36,25 @@ export async function loadReviews(category = null) {
 export async function loadReviewBySlug(category, slug) {
   const reviews = await loadReviews(category);
   return reviews.find(r => r.slug === slug) || null;
+}
+
+// New function specifically for loading playlists
+export async function loadPlaylists() {
+  const playlists = Object.entries(modules)
+    .filter(([path]) => path.includes('/playlists/'))
+    .map(([path, module]) => {
+      const data = module.default || module;
+      return {
+        ...data,
+        slug: path.split('/').pop().replace('.json', '')
+      };
+    });
+  
+  // Sort by the 'order' field (ascending), then alphabetically by title
+  return playlists.sort((a, b) => {
+    if ((a.order || 0) !== (b.order || 0)) {
+      return (a.order || 0) - (b.order || 0);
+    }
+    return a.title.localeCompare(b.title);
+  });
 }
