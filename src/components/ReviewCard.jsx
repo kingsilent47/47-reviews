@@ -38,10 +38,11 @@ function ReviewCard({ review }) {
         )}
       </div>
 
-      <div className="p-5 space-y-2">
-        <p className="text-xs text-muted uppercase tracking-wide">
+      <div className="p-5 space-y-3">
+        {/* Sharp Category Badge */}
+        <span className="inline-block px-3 py-1 border border-gray-300 text-[10px] font-bold text-ink uppercase tracking-widest">
           {review.category}
-        </p>
+        </span>
 
         <h3 className="font-serif font-bold text-lg leading-tight group-hover:underline underline-offset-4 decoration-1 transition-all">
           {review.title}
