@@ -19,5 +19,15 @@
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Hidden form for Netlify Forms to detect -->
+  <form name="review-request" data-netlify="true" hidden>
+    <input type="hidden" name="form-name" value="review-request" />
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <input type="text" name="requestType" />
+    <input type="text" name="title" />
+    <textarea name="message"></textarea>
+  </form>
 </body>
 </html>
