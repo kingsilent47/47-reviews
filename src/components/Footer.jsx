@@ -1,9 +1,20 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { loadSiteSettings } from '../lib/content';
 
 function Footer() {
   const currentYear = new Date().getFullYear();
+  const [status, setStatus] = useState({ watching: '', listening: '', playing: '' });
 
-    const exploreLinks = [
+  useEffect(() => {
+    const fetchStatus = async () => {
+      const data = await loadSiteSettings();
+      setStatus(data || {});
+    };
+    fetchStatus();
+  }, []);
+
+  const exploreLinks = [
     { path: '/', label: 'Home' },
     { path: '/films', label: 'Films' },
     { path: '/music', label: 'Music' },
@@ -22,7 +33,8 @@ function Footer() {
   return (
     <footer className="border-t border-gray-200 bg-paper mt-20">
       <div className="container-editorial py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+          
           {/* Brand Column */}
           <div>
             <Link to="/" className="text-2xl font-serif font-bold tracking-tight text-ink">
@@ -31,6 +43,34 @@ function Footer() {
             <p className="text-sm text-muted mt-4 leading-relaxed max-w-xs">
               Honest reviews. No fluff. A personal corner of the internet dedicated to thoughtful critiques of films, music, and video games.
             </p>
+          </div>
+
+          {/* "Now" Status Widget */}
+          <div>
+            <h3 className="text-xs font-medium text-ink uppercase tracking-widest mb-6">Now</h3>
+            <ul className="space-y-3 text-sm text-muted">
+              {status.watching && (
+                <li className="flex items-start gap-2">
+                  <span className="text-ink flex-shrink-0">🎬</span>
+                  <span>{status.watching}</span>
+                </li>
+              )}
+              {status.listening && (
+                <li className="flex items-start gap-2">
+                  <span className="text-ink flex-shrink-0">🎧</span>
+                  <span>{status.listening}</span>
+                </li>
+              )}
+              {status.playing && (
+                <li className="flex items-start gap-2">
+                  <span className="text-ink flex-shrink-0">🎮</span>
+                  <span>{status.playing}</span>
+                </li>
+              )}
+              {!status.watching && !status.listening && !status.playing && (
+                <li className="italic">Nothing at the moment.</li>
+              )}
+            </ul>
           </div>
 
           {/* Explore Column */}
