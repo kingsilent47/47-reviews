@@ -16,10 +16,13 @@ function Home() {
     setReviews(data || []);
   };
 
-  const latestReviews = reviews.slice(0, 6);
-  const featuredReview = reviews[0];
-  const highestRated = [...reviews].sort((a, b) => b.rating - a.rating)[0];
-  const lowestRated = [...reviews].sort((a, b) => a.rating - b.rating)[0];
+  // Find the specifically featured review, fallback to the latest if none is featured
+  const featuredReview = reviews.find(r => r.featured === true) || reviews[0];
+  
+  // Get latest reviews, excluding the featured one so it doesn't appear twice
+  const latestReviews = featuredReview 
+    ? reviews.filter(r => r.slug !== featuredReview.slug).slice(0, 6)
+    : reviews.slice(1, 7);
 
   const filteredReviews = searchQuery
     ? reviews.filter(r => 
@@ -41,6 +44,11 @@ function Home() {
     return stars.join('');
   };
 
+  const capitalize = (str) => {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   return (
     <div>
       <section className="border-b border-gray-200 py-20">
@@ -58,7 +66,7 @@ function Home() {
               placeholder="Search reviews..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 focus:border-ink focus:outline-none transition-colors rounded-none"
+              className="w-full px-4 py-3 border border-gray-300 focus:border-ink focus:outline-none transition-colors rounded-none bg-paper"
             />
           </div>
 
@@ -84,7 +92,12 @@ function Home() {
           {featuredReview && (
             <section className="border-b border-gray-200 py-16">
               <div className="container-editorial">
-                <h2 className="font-serif text-3xl font-bold mb-8">Featured Review</h2>
+                <h2 className="font-serif text-3xl font-bold mb-8 flex items-center gap-3">
+                  Featured Review
+                  <span className="px-2 py-0.5 border border-ink text-[10px] font-bold uppercase tracking-widest text-ink">
+                    Editor's Pick
+                  </span>
+                </h2>
                 <Link 
                   to={`/${featuredReview.category}/${featuredReview.slug}`} 
                   className="group block border border-gray-200 hover:border-ink transition-all duration-300 bg-paper overflow-hidden"
@@ -99,14 +112,14 @@ function Home() {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-muted">
+                        <div className="w-full h-full flex items-center justify-center text-muted font-serif italic">
                           No image
                         </div>
                       )}
                     </div>
                     <div className="p-8 md:p-12 flex flex-col justify-center">
                       <p className="text-xs text-muted uppercase tracking-widest mb-4">
-                        {featuredReview.category}
+                        {capitalize(featuredReview.category)}
                       </p>
                       <h3 className="font-serif text-4xl font-bold mb-4 leading-tight group-hover:underline underline-offset-4 decoration-1 transition-all">
                         {featuredReview.title}
@@ -146,27 +159,6 @@ function Home() {
               )}
             </div>
           </section>
-
-          {(highestRated || lowestRated) && (
-            <section className="border-t border-gray-200 py-16">
-              <div className="container-editorial">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                  {highestRated && (
-                    <div>
-                      <h2 className="font-serif text-2xl font-bold mb-6">Highest Rated</h2>
-                      <ReviewCard review={highestRated} />
-                    </div>
-                  )}
-                  {lowestRated && (
-                    <div>
-                      <h2 className="font-serif text-2xl font-bold mb-6">Lowest Rated</h2>
-                      <ReviewCard review={lowestRated} />
-                    </div>
-                  )}
-                </div>
-              </div>
-            </section>
-          )}
         </>
       )}
     </div>
