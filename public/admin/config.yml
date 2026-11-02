@@ -91,3 +91,14 @@ collections:
       - { label: "Description", name: "description", widget: "text", required: false }
       - { label: "Apple Music Link", name: "url", widget: "string" }
       - { label: "Order", name: "order", widget: "number", value_type: "int", min: 0, step: 1, default: 0, hint: "Lower numbers appear first" }
+
+    - name: "settings"
+    label: "Site Settings"
+    files:
+      - label: "Currently Consuming"
+        name: "status"
+        file: "content/settings/status.json"
+        fields:
+          - { label: "Currently Watching (Film/TV)", name: "watching", widget: "string", required: false, hint: "e.g., Dune: Part Two" }
+          - { label: "Currently Listening (Music)", name: "listening", widget: "string", required: false, hint: "e.g., Frank Ocean - Blond" }
+          - { label: "Currently Playing (Games)", name: "playing", widget: "string", required: false, hint: "e.g., Elden Ring" }
