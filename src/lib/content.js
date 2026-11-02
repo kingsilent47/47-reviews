@@ -58,3 +58,13 @@ export async function loadPlaylists() {
     return a.title.localeCompare(b.title);
   });
 }
+
+// Function to load global site settings
+export async function loadSiteSettings() {
+  const settingsPath = Object.keys(modules).find(path => path.includes('settings/status.json'));
+  if (settingsPath) {
+    const module = modules[settingsPath];
+    return module.default || module;
+  }
+  return { watching: '', listening: '', playing: '' };
+}
