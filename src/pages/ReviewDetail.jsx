@@ -80,6 +80,174 @@ function ReviewDetail() {
 
   const readingTime = calculateReadingTime(review.content);
 
+  // XSS Protection: Ensure external URLs only use http/https protocols
+  const sanitizeUrl = (url) => {
+    if (!url) return '';
+    const trimmed = url.trim();
+    if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+      return trimmed;
+    }
+    return ''; // Block javascript:, data:, or other dangerous protocols
+  };
+
+  const schemaType = category === 'films' ? 'Movie' : category === 'music' ? 'MusicAlbum' : 'VideoGame';
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "Review",
+    "itemReviewed": { "@type": schemaType, "name": review.title },
+    "author": { "@type": "Person", "name": "47 Reviews" },
+    "datePublished": review.date,
+    "reviewRating": { "@type": "Rating", "ratingValue": review.rating, "bestRating": "5", "worstRating": "1" },
+    "reviewBody": review.summary || review.content.substring(0, 200) + "..."
+  };
+
+  return (
+    <div className="py-16">
+      <div className="container-editorial max-w-3xl">
+        <nav className="flex items-center gap-2 text-sm text-muted mb-8" aria-label="Breadcrumb">
+          <Link to="/" className="hover:text-ink transition-colors">Home</Link>
+          <span className="text-gray-400">/</span>
+          <Link to={`/${category}`} className="hover:text-ink transition-colors">{capitalize(category)}</Link>
+          <span className="text-gray-400">/</span>
+          <span className="text-ink font-medium">{review.title}</span>
+        </nav>
+
+        <article>
+          <header className="mb-12">
+            <p className="text-xs text-muted uppercase tracking-widest mb-4">{capitalize(category)}</p>
+            <h1 className="font-serif text-5xl md:text-6xl font-bold mb-6 leading-tight">{review.title}</h1>
+            {review.subtitle && <p className="text-2xl text-muted mb-6 font-serif italic">{review.subtitle}</p>}
+
+            <div className="flex items-center gap-4 text-sm text-muted mb-8 pb-8 border-b border-gray-200">
+              <span className="text-2xl font-medium tracking-wide text-ink">{renderStars(review.rating)}</span>
+              <span>{review.date}</span>
+              <span>•</span>
+              <span>{readingTime} min read</span>
+            </div>
+
+            {review.image && (
+              <div 
+                onClick={() => setIsImageOpen(true)}
+                className="bg-gray-100 mb-8 overflow-hidden flex justify-center items-center min-h-[300px] md:min-h-[400px] cursor-zoom-in hover:bg-gray-200 transition-colors"
+              >
+                <img 
+                  src={review.image} 
+                  alt={review.title} 
+                  loading="eager"
+                  className="w-full h-auto max-h-[600px] object-contain" 
+                />
+              </div>
+            )}
+
+            {/* Lightbox Overlay */}
+            {isImageOpen && review.image && (
+              <div 
+                className="fixed inset-0 bg-black z-[9999] flex items-center justify-center p-4 cursor-zoom-out"
+                onClick={() => setIsImageOpen(false)}
+              >
+                <button 
+                  className="absolute top-6 right-6 text-white text-5xl font-serif leading-none hover:text-gray-400 transition-colors"
+                  aria-label="Close image"
+                >
+                  &times;
+                </button>
+                <img 
+                  src={review.image} 
+                  alt={review.title} 
+                  className="max-w-full max-h-full object-contain" 
+                />
+              </div>
+            )}
+
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 py-8 border-t border-b border-gray-200 text-sm">
+              {review.developer && <div><p className="text-muted uppercase tracking-wider text-xs mb-1">Developer</p><p className="font-medium text-ink">{review.developer}</p></div>}
+              {review.director && <div><p className="text-muted uppercase tracking-wider text-xs mb-1">Director</p><p className="font-medium text-ink">{review.director}</p></div>}
+              {review.artist && <div><p className="text-muted uppercase tracking-wider text-xs mb-1">Artist</p><p className="font-medium text-ink">{review.artist}</p></div>}
+              {review.platform && <div><p className="text-muted uppercase tracking-wider text-xs mb-1">Platform</p><p className="font-medium text-ink">{review.platform}</p></div>}
+              {review.release_date && <div><p className="text-muted uppercase tracking-wider text-xs mb-1">Release Date</p><p className="font-medium text-ink">{review.release_date}</p></div>}
+              {review.genre && <div><p className="text-muted uppercase tracking-wider text-xs mb-1">Genre</p><p className="font-medium text-ink">{review.genre}</p></div>}
+              {review.runtime && <div>import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { loadReviewBySlug, loadReviews } from '../lib/content';
+import ReviewCard from '../components/ReviewCard';
+import Comments from '../components/Comments';
+import Reactions from '../components/Reactions';
+import ShareButtons from '../components/ShareButtons';
+import BackToTop from '../components/BackToTop';
+
+function ReviewDetail() {
+  const { category, id } = useParams();
+  
+  const [review, setReview] = useState(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [relatedReviews, setRelatedReviews] = useState([]);
+  const [isImageOpen, setIsImageOpen] = useState(false);
+
+  useEffect(() => {
+    const loadReview = async () => {
+      const data = await loadReviewBySlug(category, id);
+      setReview(data);
+    };
+    loadReview();
+  }, [category, id]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollTop;
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scroll = totalScroll / windowHeight;
+      setScrollProgress(scroll * 100);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const loadRelated = async () => {
+      const allInCategory = await loadReviews(category);
+      const filtered = allInCategory.filter(r => r.slug !== id).slice(0, 3);
+      setRelatedReviews(filtered);
+    };
+    loadRelated();
+  }, [category]);
+
+  if (!review) {
+    return (
+      <div className="py-16">
+        <div className="container-editorial">
+          <p className="text-muted">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const renderStars = (rating) => {
+    const stars = [];
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
+    for (let i = 0; i < 5; i++) {
+      if (i < fullStars) stars.push('★');
+      else if (i === fullStars && hasHalfStar) stars.push('½');
+      else stars.push('☆');
+    }
+    return stars.join('');
+  };
+
+  const capitalize = (str) => {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  const calculateReadingTime = (text) => {
+    if (!text) return 1;
+    const wordsPerMinute = 200;
+    const wordCount = text.trim().split(/\s+/).length;
+    const minutes = Math.ceil(wordCount / wordsPerMinute);
+    return Math.max(1, minutes);
+  };
+
+  const readingTime = calculateReadingTime(review.content);
+
   const schemaType = category === 'films' ? 'Movie' : category === 'music' ? 'MusicAlbum' : 'VideoGame';
   const schemaData = {
     "@context": "https://schema.org",
