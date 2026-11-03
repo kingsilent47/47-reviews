@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 
 function ReviewCard({ review }) {
   const renderStars = (rating) => {
+    if (!rating || rating <= 0) return null;
+    
     const stars = [];
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
@@ -23,17 +25,20 @@ function ReviewCard({ review }) {
       to={`/${review.category}/${review.slug}`}
       className="group block border border-gray-200 hover:border-ink transition-all duration-300 bg-paper overflow-hidden"
     >
-      <div className="aspect-[16/9] bg-gray-100 overflow-hidden">
+      {/* Image Container with Strict Hover Containment */}
+      <div className="aspect-[16/9] bg-gray-100 image-contain">
         {review.image ? (
           <img
             src={review.image}
             alt={review.title}
             loading="lazy"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+            className="w-full h-full object-cover"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-muted text-sm">
-            No image
+          <div className="w-full h-full flex items-center justify-center border-b border-gray-200">
+            <span className="text-[10px] font-bold text-muted uppercase tracking-widest">
+              No Cover Art
+            </span>
           </div>
         )}
       </div>
@@ -53,12 +58,17 @@ function ReviewCard({ review }) {
         )}
 
         <div className="flex items-center justify-between pt-2">
-          <span className="text-sm font-medium tracking-wide">
-            {renderStars(review.rating)}
-          </span>
-          <span className="text-xs text-muted">
-            {review.date}
-          </span>
+          {/* Only render stars if a rating exists */}
+          {review.rating > 0 && (
+            <span className="text-sm font-medium tracking-wide">
+              {renderStars(review.rating)}
+            </span>
+          )}
+          {review.date && (
+            <span className="text-xs text-muted">
+              {review.date}
+            </span>
+          )}
         </div>
       </div>
     </Link>
