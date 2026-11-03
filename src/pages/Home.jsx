@@ -53,7 +53,7 @@ function Home() {
     <div>
       <section className="border-b border-gray-200 py-20">
         <div className="container-editorial">
-          <h1 className="font-serif text-5xl md:text-6xl font-bold mb-6 leading-tight">
+             <h1 className="font-serif text-5xl md:text-6xl font-bold mb-6 leading-tight reveal-text">
             Honest reviews.<br />No fluff.
           </h1>
           <p className="text-xl text-muted max-w-2xl leading-relaxed mb-8">
