@@ -72,7 +72,7 @@ function Home() {
 
           {searchQuery && (
             <div className="mt-8">
-              <h2 className="font-serif text-2xl font-bold mb-6">Search Results</h2>
+              <h2 className="font-serif text-2xl font-bold mb-6 reveal-text">Search Results</h2>
               {filteredReviews.length > 0 ? (
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                   {filteredReviews.map(review => (
@@ -92,7 +92,7 @@ function Home() {
           {featuredReview && (
             <section className="border-b border-gray-200 py-16">
               <div className="container-editorial">
-                <h2 className="font-serif text-3xl font-bold mb-8 flex items-center gap-3">
+                <h2 className="font-serif text-3xl font-bold mb-8 flex items-center gap-3 reveal-text">
                   Featured Review
                   <span className="px-2 py-0.5 border border-ink text-[10px] font-bold uppercase tracking-widest text-ink">
                     Editor's Pick
@@ -147,7 +147,7 @@ function Home() {
 
           <section className="py-16">
             <div className="container-editorial">
-              <h2 className="font-serif text-3xl font-bold mb-8">Latest Reviews</h2>
+              <h2 className="font-serif text-3xl font-bold mb-8 reveal-text">Latest Reviews</h2>
               {latestReviews.length > 0 ? (
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                   {latestReviews.map(review => (
