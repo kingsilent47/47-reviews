@@ -12,9 +12,9 @@ export default {
         sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'sans-serif'],
       },
       colors: {
-        'ink': '#1a1a1a',
-        'paper': '#fafafa',
-        'muted': '#6b6b6b',
+        'ink': '#202020',      /* Almost-black (Main text) */
+        'paper': '#FAF9F6',    /* Warm off-white (Background) */
+        'muted': '#777777',    /* Muted grey (Secondary text) */
       }
     },
   },
