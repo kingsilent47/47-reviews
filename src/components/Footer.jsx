@@ -45,30 +45,30 @@ function Footer() {
             </p>
           </div>
 
-          {/* "Now" Status Widget */}
+          {/* "Now" Status Widget (Professional Typographic Layout) */}
           <div>
-            <h3 className="text-xs font-medium text-ink uppercase tracking-widest mb-6">Now</h3>
-            <ul className="space-y-3 text-sm text-muted">
+            <h3 className="text-xs font-medium text-ink uppercase tracking-widest mb-6">Currently</h3>
+            <ul className="space-y-5">
               {status.watching && (
-                <li className="flex items-start gap-2">
-                  <span className="text-ink flex-shrink-0">🎬</span>
-                  <span>{status.watching}</span>
+                <li className="flex flex-col gap-1">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted">Film / TV</span>
+                  <span className="text-sm text-ink font-medium leading-snug">{status.watching}</span>
                 </li>
               )}
               {status.listening && (
-                <li className="flex items-start gap-2">
-                  <span className="text-ink flex-shrink-0">🎧</span>
-                  <span>{status.listening}</span>
+                <li className="flex flex-col gap-1">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted">Music</span>
+                  <span className="text-sm text-ink font-medium leading-snug">{status.listening}</span>
                 </li>
               )}
               {status.playing && (
-                <li className="flex items-start gap-2">
-                  <span className="text-ink flex-shrink-0">🎮</span>
-                  <span>{status.playing}</span>
+                <li className="flex flex-col gap-1">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted">Games</span>
+                  <span className="text-sm text-ink font-medium leading-snug">{status.playing}</span>
                 </li>
               )}
               {!status.watching && !status.listening && !status.playing && (
-                <li className="italic">Nothing at the moment.</li>
+                <li className="text-sm text-muted italic">Nothing at the moment.</li>
               )}
             </ul>
           </div>
