@@ -66,11 +66,11 @@ function Contact() {
   return (
     <div className="py-16">
       <div className="container-editorial max-w-2xl">
-        <h1 className="font-serif text-5xl font-bold mb-8">Contact & Requests</h1>
+        <h1 className="font-serif text-5xl font-bold mb-8 reveal-text">Contact & Requests</h1>
 
         <div className="space-y-8">
           <div>
-            <h2 className="font-serif text-2xl font-bold mb-4">Request a Review</h2>
+            <h2 className="font-serif text-2xl font-bold mb-4 reveal-text">Request a Review</h2>
             <p className="text-lg text-muted leading-relaxed mb-6">
               Have a suggestion for what I should review next? Fill out the form below. I read every request.
             </p>
