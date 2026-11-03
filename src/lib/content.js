@@ -19,9 +19,9 @@ function parseReview(path, module) {
 }
 
 export async function loadReviews(category = null) {
-  // Filter out the 'playlists' folder so they don't mix with reviews
+  // Filter out 'playlists' and 'settings' folders so they don't mix with reviews
   const reviews = Object.entries(modules)
-    .filter(([path]) => !path.includes('/playlists/'))
+    .filter(([path]) => !path.includes('/playlists/') && !path.includes('/settings/'))
     .map(([path, module]) => parseReview(path, module));
 
   if (category) {
@@ -38,7 +38,7 @@ export async function loadReviewBySlug(category, slug) {
   return reviews.find(r => r.slug === slug) || null;
 }
 
-// New function specifically for loading playlists
+// Function specifically for loading playlists
 export async function loadPlaylists() {
   const playlists = Object.entries(modules)
     .filter(([path]) => path.includes('/playlists/'))
