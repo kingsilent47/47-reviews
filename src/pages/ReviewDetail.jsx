@@ -6,6 +6,7 @@ import Comments from '../components/Comments';
 import Reactions from '../components/Reactions';
 import ShareButtons from '../components/ShareButtons';
 import BackToTop from '../components/BackToTop';
+import ReactMarkdown from 'react-markdown';
 
 function ReviewDetail() {
   const { category, id } = useParams();
@@ -206,12 +207,51 @@ function ReviewDetail() {
               </blockquote>
             )}
 
-            <div className="space-y-6">
-              {review.content.split('\n\n').map((paragraph, index) => (
-                <p key={index} className={index === 0 ? "first-letter:float-left first-letter:mr-3 first-letter:text-6xl first-letter:font-serif first-letter:font-bold first-letter:leading-none first-letter:text-ink" : ""}>
-                  {paragraph}
-                </p>
-              ))}
+            <div className="prose-editorial">
+              <ReactMarkdown
+                components={{
+                  p: ({ children, ...props }) => {
+                    const isFirst = props.index === 0;
+                    return (
+                      <p className={isFirst ? "first-letter:float-left first-letter:mr-3 first-letter:text-6xl first-letter:font-serif first-letter:font-bold first-letter:leading-none first-letter:text-ink mb-6" : "mb-6"}>
+                        {children}
+                      </p>
+                    );
+                  },
+                  h2: ({ children }) => (
+                    <h2 className="font-serif text-2xl font-bold mt-12 mb-6 text-ink">
+                      {children}
+                    </h2>
+                  ),
+                  h3: ({ children }) => (
+                    <h3 className="font-serif text-xl font-bold mt-8 mb-4 text-ink">
+                      {children}
+                    </h3>
+                  ),
+                  blockquote: ({ children }) => (
+                    <blockquote className="my-8 py-6 border-l-4 border-ink pl-6 italic text-lg text-muted">
+                      {children}
+                    </blockquote>
+                  ),
+                  strong: ({ children }) => (
+                    <strong className="font-bold text-ink">{children}</strong>
+                  ),
+                  em: ({ children }) => (
+                    <em className="italic">{children}</em>
+                  ),
+                  ul: ({ children }) => (
+                    <ul className="list-disc pl-6 mb-6 space-y-2">{children}</ul>
+                  ),
+                  ol: ({ children }) => (
+                    <ol className="list-decimal pl-6 mb-6 space-y-2">{children}</ol>
+                  ),
+                  li: ({ children }) => (
+                    <li className="text-base leading-relaxed">{children}</li>
+                  ),
+                }}
+              >
+                {review.content}
+              </ReactMarkdown>
             </div>
 
             {review.pros && review.pros.length > 0 && (
