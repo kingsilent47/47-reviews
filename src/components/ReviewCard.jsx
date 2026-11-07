@@ -49,7 +49,7 @@ function ReviewCard({ review }) {
           {review.category}
         </span>
 
-        <h3 className="font-serif font-bold text-lg leading-tight group-hover:underline underline-offset-4 decoration-1 transition-all">
+        <h3 className="font-serif font-bold text-lg leading-tight break-words line-clamp-2 group-hover:underline underline-offset-4 decoration-1 transition-all">
           {review.title}
         </h3>
 
