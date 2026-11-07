@@ -149,7 +149,7 @@ function Home() {
             <div className="container-editorial">
               <h2 className="font-serif text-3xl font-bold mb-8 reveal-text">Latest Reviews</h2>
               {latestReviews.length > 0 ? (
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                   {latestReviews.map(review => (
                     <ReviewCard key={review.slug} review={review} />
                   ))}
