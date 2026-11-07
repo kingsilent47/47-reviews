@@ -32,6 +32,8 @@ function Home() {
     : [];
 
   const renderStars = (rating) => {
+    if (!rating || rating <= 0) return null;
+    
     const stars = [];
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
@@ -66,7 +68,7 @@ function Home() {
               placeholder="Search reviews..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 focus:border-ink focus:outline-none transition-colors rounded-none bg-paper"
+              className="w-full px-4 py-3 border border-gray-300 focus:border-ink focus:outline-none transition-colors rounded-none bg-paper text-ink placeholder-muted"
             />
           </div>
 
@@ -74,7 +76,7 @@ function Home() {
             <div className="mt-8">
               <h2 className="font-serif text-2xl font-bold mb-6 reveal-text">Search Results</h2>
               {filteredReviews.length > 0 ? (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                   {filteredReviews.map(review => (
                     <ReviewCard key={review.slug} review={review} />
                   ))}
@@ -90,7 +92,7 @@ function Home() {
       {!searchQuery && (
         <>
           {featuredReview && (
-            <section className="border-b border-gray-200 py-16">
+            <section className="border-b border-gray-200 py-12 md:py-16">
               <div className="container-editorial">
                 <h2 className="font-serif text-3xl font-bold mb-8 flex items-center gap-3 reveal-text">
                   Featured Review
@@ -103,38 +105,43 @@ function Home() {
                   className="group block border border-gray-200 hover:border-ink transition-all duration-300 bg-paper overflow-hidden"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-                    <div className="bg-gray-100 overflow-hidden min-h-[300px] md:min-h-[500px] flex items-center justify-center">
+                    {/* Sharp Image Container with Strict Hover Containment */}
+                    <div className="image-contain bg-gray-100 aspect-[16/9] md:aspect-auto md:min-h-[500px] flex items-center justify-center">
                       {featuredReview.image ? (
                         <img
                           src={featuredReview.image}
                           alt={featuredReview.title}
                           loading="eager"
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                          className="w-full h-full object-cover"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-muted font-serif italic">
-                          No image
-                        </div>
+                        <span className="text-[10px] font-bold text-muted uppercase tracking-widest">
+                          No Cover Art
+                        </span>
                       )}
                     </div>
+                    
+                    {/* Editorial Text Content */}
                     <div className="p-8 md:p-12 flex flex-col justify-center">
-                      <p className="text-xs text-muted uppercase tracking-widest mb-4">
+                      <p className="text-[10px] font-bold text-muted uppercase tracking-widest mb-4">
                         {capitalize(featuredReview.category)}
                       </p>
-                      <h3 className="font-serif text-4xl font-bold mb-4 leading-tight group-hover:underline underline-offset-4 decoration-1 transition-all">
+                      <h3 className="font-serif text-3xl md:text-4xl font-bold mb-4 leading-tight break-words line-clamp-2 group-hover:underline underline-offset-4 decoration-1 transition-all">
                         {featuredReview.title}
                       </h3>
                       {featuredReview.subtitle && (
-                        <p className="text-lg text-muted mb-4 font-serif italic">{featuredReview.subtitle}</p>
+                        <p className="text-lg text-muted mb-6 font-serif italic">{featuredReview.subtitle}</p>
                       )}
-                      <p className="text-muted leading-relaxed mb-6 line-clamp-4">
+                      <p className="text-muted leading-relaxed mb-8 line-clamp-4">
                         {featuredReview.summary}
                       </p>
-                      <div className="flex items-center justify-between pt-6 border-t border-gray-200">
-                        <span className="text-lg font-medium tracking-wide text-ink">
-                          {renderStars(featuredReview.rating)}
-                        </span>
-                        <span className="text-xs text-muted uppercase tracking-wider group-hover:text-ink transition-colors">
+                      <div className="flex items-center justify-between pt-6 border-t border-gray-200 mt-auto">
+                        {featuredReview.rating > 0 && (
+                          <span className="text-lg font-medium tracking-wide text-ink">
+                            {renderStars(featuredReview.rating)}
+                          </span>
+                        )}
+                        <span className="text-xs font-bold text-muted uppercase tracking-widest group-hover:text-ink transition-colors">
                           Read Review &rarr;
                         </span>
                       </div>
@@ -145,7 +152,7 @@ function Home() {
             </section>
           )}
 
-          <section className="py-16">
+          <section className="py-12 md:py-16">
             <div className="container-editorial">
               <h2 className="font-serif text-3xl font-bold mb-8 reveal-text">Latest Reviews</h2>
               {latestReviews.length > 0 ? (
