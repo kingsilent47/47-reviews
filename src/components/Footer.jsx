@@ -31,9 +31,9 @@ function Footer() {
   ];
 
   return (
-    <footer className="border-t border-gray-200 bg-paper mt-20">
-      <div className="container-editorial py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+    <footer className="border-t border-gray-200 bg-paper mt-12 md:mt-20">
+      <div className="container-editorial py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 mb-10 md:mb-12">
           
           {/* Brand Column */}
           <div>
